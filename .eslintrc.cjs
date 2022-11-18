@@ -19,5 +19,6 @@ module.exports = {
   plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
     'react/react-in-jsx-scope': 0,
+    'react/jsx-props-no-spreading': 0, // to allow component customization by spreading the default props from Chakra UI
   },
 };
