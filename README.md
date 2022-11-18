@@ -21,3 +21,12 @@ Launch the tests:
 ## References
 
 The setup of this project is highly inspired by this video: https://www.youtube.com/watch?v=cchqeWY0Nak
+
+## Built using
+
+- React
+- Vite
+- Vitest
+- Testing Library
+- React Router DOM
+- Chakra UI
