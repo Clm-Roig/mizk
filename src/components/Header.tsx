@@ -1,5 +1,6 @@
 import { Flex, IconButton, Text } from '@chakra-ui/react';
 import { FaBars } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 type Props = {
   onOpenSideMenu: () => void;
@@ -15,9 +16,11 @@ function Header({ onOpenSideMenu }: Props) {
       />
 
       <Flex alignItems="baseline">
-        <Text fontFamily="heading" fontSize="2xl" mx={2}>
-          Mizk
-        </Text>
+        <Link to="/">
+          <Text fontFamily="heading" fontSize="2xl" mx={2}>
+            Mizk
+          </Text>
+        </Link>
         <Text>All your tools in one place</Text>
       </Flex>
     </Flex>
