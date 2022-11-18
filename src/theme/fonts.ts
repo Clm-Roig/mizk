@@ -1,6 +1,6 @@
 const fonts = {
-  body: 'system-ui, sans-serif',
-  heading: 'Georgia, serif',
+  body: 'Quicksand, sans-serif',
+  heading: 'Frank Ruhl Libre, serif',
   mono: 'Menlo, monospace',
 };
 

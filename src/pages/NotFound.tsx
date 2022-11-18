@@ -1,10 +1,13 @@
-import { Heading, Link } from '@chakra-ui/react';
+import { Heading, Link as ChakraLink } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 function NotFound() {
   return (
     <>
       <Heading as="h1">Not Found</Heading>
-      <Link href="/">Go home</Link>
+      <ChakraLink as={Link} to="/">
+        Go home
+      </ChakraLink>
     </>
   );
 }

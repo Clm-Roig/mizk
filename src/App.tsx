@@ -3,24 +3,21 @@ import { ChakraProvider } from '@chakra-ui/react';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import theme from './theme';
+import AppLayout from './components/AppLayout';
 
-export function App() {
-  return (
-    <div>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </div>
-  );
-}
-
-export function WrappedApp() {
+function App() {
   return (
     <ChakraProvider theme={theme}>
       <HashRouter>
-        <App />
+        <AppLayout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AppLayout>
       </HashRouter>
     </ChakraProvider>
   );
 }
+
+export default App;
