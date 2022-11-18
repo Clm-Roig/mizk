@@ -1,6 +1,8 @@
 import { HashRouter, Routes, Route } from 'react-router-dom';
+import { ChakraProvider } from '@chakra-ui/react';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
+import theme from './theme';
 
 export function App() {
   return (
@@ -15,8 +17,10 @@ export function App() {
 
 export function WrappedApp() {
   return (
-    <HashRouter>
-      <App />
-    </HashRouter>
+    <ChakraProvider theme={theme}>
+      <HashRouter>
+        <App />
+      </HashRouter>
+    </ChakraProvider>
   );
 }
