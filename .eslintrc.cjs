@@ -20,5 +20,6 @@ module.exports = {
   rules: {
     'react/react-in-jsx-scope': 0,
     'react/jsx-props-no-spreading': 0, // to allow component customization by spreading the default props from Chakra UI
+    'react/require-default-props': 0, // to allow facultative props (but you must write a default values in the component function definition!)
   },
 };

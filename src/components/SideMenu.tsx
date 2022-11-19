@@ -51,8 +51,10 @@ function SideMenu({ btnRef, isOpen, onClose }: Props) {
               </ChakraLink>
             </MenuItem>
             <MenuDivider />
-            <MenuGroup title="Coming soon...">
-              <MenuItem disabled>Coming soon...</MenuItem>
+            <MenuGroup title="Image">
+              <ChakraLink as={Link} to="/images/converter" onClick={onClose}>
+                <MenuItem disabled>Converter</MenuItem>
+              </ChakraLink>
             </MenuGroup>
           </Menu>
         </DrawerBody>

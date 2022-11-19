@@ -5,6 +5,7 @@ import NotFound from './pages/NotFound';
 import theme from './theme';
 import AppLayout from './components/AppLayout';
 import DurationCalculator from './pages/DurationCalculator';
+import ImageConverter from './pages/ImageConverter';
 
 function App() {
   return (
@@ -15,6 +16,9 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/calculators">
               <Route path="duration" element={<DurationCalculator />} />
+            </Route>
+            <Route path="/images">
+              <Route path="converter" element={<ImageConverter />} />
             </Route>
             <Route path="*" element={<NotFound />} />
           </Routes>
