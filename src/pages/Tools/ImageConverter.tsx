@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { useRef, useState } from 'react';
 import { AiFillCloseCircle } from 'react-icons/ai';
-import FileUpload from '../components/FileUpload';
+import FileUpload from '../../components/FileUpload';
 
 function ImageConverter() {
   const [imagePath, setImagePath] = useState('');

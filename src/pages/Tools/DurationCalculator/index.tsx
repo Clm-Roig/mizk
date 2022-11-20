@@ -53,9 +53,9 @@ function DurationCalculator() {
     <div>
       <Heading as="h1">Duration calculator</Heading>
 
-      <Stack spacing={4}>
-        <Heading as="h2" size="lg">
-          Your calculation
+      <Stack spacing={4} mt={4}>
+        <Heading as="h2" size="md">
+          Your calculation&nbsp;
           <Tooltip />
         </Heading>
 

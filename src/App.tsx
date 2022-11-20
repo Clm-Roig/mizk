@@ -4,8 +4,10 @@ import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import theme from './theme';
 import AppLayout from './components/AppLayout';
-import DurationCalculator from './pages/DurationCalculator';
-import ImageConverter from './pages/ImageConverter';
+import DurationCalculator from './pages/Tools/DurationCalculator';
+import ImageConverter from './pages/Tools/ImageConverter';
+import ImageTools from './pages/Tools/ImageTools';
+import CalculatorTools from './pages/Tools/CalculatorTools';
 
 function App() {
   return (
@@ -14,12 +16,16 @@ function App() {
         <AppLayout>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/calculators">
-              <Route path="duration" element={<DurationCalculator />} />
-            </Route>
-            <Route path="/images">
-              <Route path="converter" element={<ImageConverter />} />
-            </Route>
+
+            <Route path="calculators" element={<CalculatorTools />} />
+            <Route
+              path="calculators/duration"
+              element={<DurationCalculator />}
+            />
+
+            <Route path="images" element={<ImageTools />} />
+            <Route path="images/converter" element={<ImageConverter />} />
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AppLayout>
