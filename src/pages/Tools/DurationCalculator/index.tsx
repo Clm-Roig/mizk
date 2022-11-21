@@ -4,10 +4,12 @@ import {
   Heading,
   Stack,
   Text,
-  Textarea,
+  useToast,
+  VStack,
 } from '@chakra-ui/react';
 import parse from 'parse-duration';
 import React, { useEffect, useState } from 'react';
+import Textarea from '../../../components/Textarea';
 
 import computeDurationToString from './computeDurationToString';
 import OperationButtons from './OperationButtons';
@@ -21,6 +23,7 @@ delete parse.wk;
 delete parse.d;
 
 function DurationCalculator() {
+  const toast = useToast();
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState('');
   const [resultString, setResultString] = useState('');
@@ -30,6 +33,17 @@ function DurationCalculator() {
     setResultString(result);
     setError(err);
   }, [inputValue]);
+
+  const copyResult = () => {
+    navigator.clipboard.writeText(resultString);
+    toast({
+      title: 'Result copied to your clipboard!',
+      status: 'success',
+      position: 'top',
+      duration: 2000,
+      isClosable: true,
+    });
+  };
 
   const handleInputChange = (e: React.FormEvent<HTMLTextAreaElement>) =>
     setInputValue(e.currentTarget.value);
@@ -69,7 +83,12 @@ function DurationCalculator() {
 
         {(resultString || error) && (
           <Center>
-            {resultString && <Text fontSize="5xl">{resultString}</Text>}
+            {resultString && (
+              <VStack>
+                <Text fontSize="5xl">{resultString}</Text>{' '}
+                <Button onClick={copyResult}>Copy result</Button>
+              </VStack>
+            )}
             {error && (
               <Text color="red" fontSize="lg">
                 {error}

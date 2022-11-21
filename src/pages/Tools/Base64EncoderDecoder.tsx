@@ -1,13 +1,7 @@
-import {
-  Center,
-  Heading,
-  Icon,
-  Text,
-  Textarea,
-  VStack,
-} from '@chakra-ui/react';
+import { Center, Heading, Icon, Text, VStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { FaExchangeAlt } from 'react-icons/fa';
+import Textarea from '../../components/Textarea';
 
 function Base64EncoderDecoder() {
   const [inputValue, setInputValue] = useState('');
