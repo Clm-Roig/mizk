@@ -1,6 +1,6 @@
 const fonts = {
   body: 'Quicksand, sans-serif',
-  heading: 'Frank Ruhl Libre, serif',
+  heading: 'Quicksand, serif',
   mono: 'Menlo, monospace',
 };
 
