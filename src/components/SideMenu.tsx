@@ -56,6 +56,16 @@ function SideMenu({ btnRef, isOpen, onClose }: Props) {
                 <MenuItem disabled>Converter</MenuItem>
               </ChakraLink>
             </MenuGroup>
+            <MenuDivider />
+            <MenuGroup title="Encoders / Decoders">
+              <ChakraLink
+                as={Link}
+                to="/encoders-decoders/base64"
+                onClick={onClose}
+              >
+                <MenuItem disabled>Base64</MenuItem>
+              </ChakraLink>
+            </MenuGroup>
           </Menu>
         </DrawerBody>
 
