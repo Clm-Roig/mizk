@@ -1,5 +1,5 @@
 import { Tool } from '../models/Tool';
-import { CALCULATOR, IMAGE } from './toolTypes.ts';
+import { CALCULATOR, ENCODER_DECODER, IMAGE } from './toolTypes.ts';
 
 const tools: Array<Tool> = [
   {
@@ -27,6 +27,13 @@ const tools: Array<Tool> = [
     name: 'Image converter',
     type: IMAGE,
     url: '/images/converter',
+  },
+  {
+    description: 'Encode or decode a base 64 string',
+    keywords: ['encoder', 'decoder', 'base64'],
+    name: 'Base 64 encoder / decoder',
+    type: ENCODER_DECODER,
+    url: '/encoders-decoders/base64',
   },
 ];
 

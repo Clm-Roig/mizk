@@ -8,6 +8,8 @@ import DurationCalculator from './pages/Tools/DurationCalculator';
 import ImageConverter from './pages/Tools/ImageConverter';
 import ImageTools from './pages/Tools/ImageTools';
 import CalculatorTools from './pages/Tools/CalculatorTools';
+import EncoderDecoderTools from './pages/Tools/EncoderDecoderTools';
+import Base64EncoderDecoder from './pages/Tools/Base64EncoderDecoder';
 
 function App() {
   return (
@@ -25,6 +27,12 @@ function App() {
 
             <Route path="images" element={<ImageTools />} />
             <Route path="images/converter" element={<ImageConverter />} />
+
+            <Route path="encoders-decoders" element={<EncoderDecoderTools />} />
+            <Route
+              path="encoders-decoders/base64"
+              element={<Base64EncoderDecoder />}
+            />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
