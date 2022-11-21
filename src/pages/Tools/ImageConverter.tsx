@@ -9,13 +9,28 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { useRef, useState } from 'react';
+import { Accept } from 'react-dropzone';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import FileUpload from '../../components/FileUpload';
+
+const ACCEPTED_FORMATS: Accept = {
+  'image/avif': [],
+  'image/bmp': [],
+  'image/gif': [],
+  'image/ico': [],
+  'image/svg+xml': [],
+  'image/png': [],
+  'image/x-icon': [],
+  'image/webp': [],
+};
 
 function ImageConverter() {
   const [imagePath, setImagePath] = useState('');
   const [imageName, setImageName] = useState('');
   const imgRef = useRef<HTMLImageElement>(null);
+  const formatList = Object.keys(ACCEPTED_FORMATS)
+    .map((k) => k.split('/')[1].split('+')[0]) // Second split to separate svg+xml to obtain only svg
+    .join(', ');
 
   const onFileAccepted = (file: File) => {
     if (file) {
@@ -52,15 +67,14 @@ function ImageConverter() {
     }
   };
 
-  // Responsive img handling
-
   return (
     <>
       <Heading as="h1">Image converter</Heading>
 
       <VStack>
-        <Text>Convert any png image to jpg</Text>
+        <Text>Convert an image ({formatList}) to jpg</Text>
         <FileUpload
+          acceptedFormats={ACCEPTED_FORMATS}
           dropText="Drag & drop your image here or click to select it on your device"
           onFileAccepted={onFileAccepted}
         />

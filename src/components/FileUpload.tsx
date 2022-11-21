@@ -13,16 +13,12 @@ import {
 import { FaFile } from 'react-icons/fa';
 
 interface Props {
-  acceptedFormats?: Accept;
+  acceptedFormats: Accept;
   dropText: string;
   onFileAccepted: (file: File) => void;
 }
 
-function FileUpload({
-  dropText,
-  onFileAccepted,
-  acceptedFormats = { 'image/png': ['.png', '.webp'] },
-}: Props) {
+function FileUpload({ dropText, onFileAccepted, acceptedFormats }: Props) {
   const [errorText, setErrorText] = useState('');
   const onDropAccepted = useCallback(
     (acceptedFiles: Array<File>) => {
