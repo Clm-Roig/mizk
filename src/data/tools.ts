@@ -26,7 +26,7 @@ const tools: Array<Tool> = [
     ],
     name: 'Image converter',
     type: IMAGE,
-    url: '/images/converter',
+    url: '/images/convert',
   },
   {
     description: 'Encode or decode a base 64 string',
@@ -34,6 +34,13 @@ const tools: Array<Tool> = [
     name: 'Base 64 encoder / decoder',
     type: ENCODER_DECODER,
     url: '/encoders-decoders/base64',
+  },
+  {
+    description: 'Crop an image to your desired size.',
+    keywords: ['image', 'crop', 'size', 'resize'],
+    name: 'Image cropper',
+    type: IMAGE,
+    url: '/images/crop',
   },
 ];
 

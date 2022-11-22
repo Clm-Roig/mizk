@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   Heading,
-  IconButton,
   Image,
   ScaleFade,
   Text,
@@ -10,8 +9,8 @@ import {
 } from '@chakra-ui/react';
 import { useRef, useState } from 'react';
 import { Accept } from 'react-dropzone';
-import { AiFillCloseCircle } from 'react-icons/ai';
 import FileUpload from '../../components/FileUpload';
+import RemoveButton from '../../components/RemoveButton';
 
 const ACCEPTED_FORMATS: Accept = {
   'image/avif': [],
@@ -63,7 +62,9 @@ function ImageConverter() {
       anchor.click();
     } else {
       // eslint-disable-next-line no-alert
-      alert('Sorry, an error occured...');
+      alert(
+        'Sorry, a rare error occured: imgRef, imgRef.current or ctx is not defined'
+      );
     }
   };
 
@@ -100,18 +101,7 @@ function ImageConverter() {
                 maxHeight="100%"
                 m="auto"
               />
-              <IconButton
-                rounded="50%"
-                fontSize="2rem"
-                position="absolute"
-                right="-1rem"
-                top="-1rem"
-                variant="solid"
-                colorScheme="red"
-                aria-label="Remove image"
-                icon={<AiFillCloseCircle />}
-                onClick={removeImage}
-              />
+              <RemoveButton aria-label="Remove image" onClick={removeImage} />
             </Box>
 
             <Text fontWeight="bold">{imageName}</Text>
