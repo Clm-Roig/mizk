@@ -52,7 +52,7 @@ function SideMenu({ btnRef, isOpen, onClose }: Props) {
             </MenuItem>
             <MenuDivider />
             <MenuGroup title="Image">
-              <ChakraLink as={Link} to="/images/converter" onClick={onClose}>
+              <ChakraLink as={Link} to="/images/convert" onClick={onClose}>
                 <MenuItem disabled>Converter</MenuItem>
               </ChakraLink>
             </MenuGroup>
