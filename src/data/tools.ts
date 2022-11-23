@@ -5,6 +5,7 @@ const tools: Array<Tool> = [
   {
     description: 'Add and substract duration, from milliseconds to days.',
     keywords: ['calculator', 'duration', 'second', 'hour', 'minut', 'day'],
+    menuName: 'Duration',
     name: 'Duration calculator',
     type: CALCULATOR,
     url: '/calculators/duration',
@@ -24,6 +25,7 @@ const tools: Array<Tool> = [
       'svg',
       'webp',
     ],
+    menuName: 'Converter',
     name: 'Image converter',
     type: IMAGE,
     url: '/images/convert',
@@ -31,13 +33,15 @@ const tools: Array<Tool> = [
   {
     description: 'Encode or decode a base 64 string',
     keywords: ['encoder', 'decoder', 'base64'],
-    name: 'Base 64 encoder / decoder',
+    menuName: 'Base64',
+    name: 'Base64 encoder / decoder',
     type: ENCODER_DECODER,
     url: '/encoders-decoders/base64',
   },
   {
     description: 'Crop an image to your desired size.',
     keywords: ['image', 'crop', 'size', 'resize'],
+    menuName: 'Cropper',
     name: 'Image cropper',
     type: IMAGE,
     url: '/images/crop',

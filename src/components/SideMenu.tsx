@@ -1,4 +1,6 @@
 import {
+  Box,
+  Divider,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -6,14 +8,31 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
+  HStack,
+  Icon,
   Link as ChakraLink,
-  Menu,
-  MenuDivider,
-  MenuGroup,
-  MenuItem,
+  List,
+  ListItem,
+  StyleProps,
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { RefObject } from 'react';
+import tools from '../data/tools';
+
+const dividerStyle: StyleProps = {
+  my: 4,
+};
+const toolTypeTextStyle: StyleProps = {
+  fontSize: '1.2rem',
+  fontWeight: '500',
+  mb: 2,
+  textTransform: 'uppercase',
+};
+
+const toolListItemStyle: StyleProps = {
+  ml: 4,
+  my: 2,
+};
 
 type Props = {
   btnRef: RefObject<HTMLButtonElement>;
@@ -22,6 +41,9 @@ type Props = {
 };
 
 function SideMenu({ btnRef, isOpen, onClose }: Props) {
+  const toolTypes = [...new Set(tools.map((t) => t.type))].sort((a, b) =>
+    a.name.localeCompare(b.name)
+  );
   return (
     <Drawer
       isOpen={isOpen}
@@ -39,34 +61,31 @@ function SideMenu({ btnRef, isOpen, onClose }: Props) {
         </DrawerHeader>
 
         <DrawerBody>
-          <Menu>
-            <MenuGroup title="Calculators" />
-            <MenuItem>
-              <ChakraLink
-                as={Link}
-                to="/calculators/duration"
-                onClick={onClose}
-              >
-                Duration
-              </ChakraLink>
-            </MenuItem>
-            <MenuDivider />
-            <MenuGroup title="Image">
-              <ChakraLink as={Link} to="/images/convert" onClick={onClose}>
-                <MenuItem disabled>Converter</MenuItem>
-              </ChakraLink>
-            </MenuGroup>
-            <MenuDivider />
-            <MenuGroup title="Encoders / Decoders">
-              <ChakraLink
-                as={Link}
-                to="/encoders-decoders/base64"
-                onClick={onClose}
-              >
-                <MenuItem disabled>Base64</MenuItem>
-              </ChakraLink>
-            </MenuGroup>
-          </Menu>
+          {toolTypes.map((type, idx) => (
+            <Box key={type.name}>
+              <Box {...toolTypeTextStyle}>
+                <HStack>
+                  <Icon as={type.icon} color="gray.400" />
+                  <ChakraLink as={Link} to={type.url} onClick={onClose}>
+                    {type.pluralName}
+                  </ChakraLink>
+                </HStack>
+              </Box>
+              <List>
+                {tools
+                  .filter((t) => t.type === type)
+                  .sort((a, b) => a.name.localeCompare(b.name))
+                  .map((tool) => (
+                    <ListItem key={tool.name} {...toolListItemStyle}>
+                      <ChakraLink as={Link} to={tool.url} onClick={onClose}>
+                        {tool.menuName}
+                      </ChakraLink>
+                    </ListItem>
+                  ))}
+              </List>
+              {idx !== toolTypes.length - 1 && <Divider {...dividerStyle} />}
+            </Box>
+          ))}
         </DrawerBody>
 
         <DrawerFooter>
