@@ -31,7 +31,7 @@ const linkTheme = {
       right: 0,
       transform: 'scaleX(0)',
       transition: 'transform ease-in-out',
-      transitionDuration: 'normal',
+      transitionDuration: 'fast',
       width: '100%',
     },
   },

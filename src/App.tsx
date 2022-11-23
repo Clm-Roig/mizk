@@ -11,6 +11,7 @@ import CalculatorTools from './pages/Tools/CalculatorTools';
 import EncoderDecoderTools from './pages/Tools/EncoderDecoderTools';
 import Base64EncoderDecoder from './pages/Tools/Base64EncoderDecoder';
 import ImageCropper from './pages/Tools/ImageCropper';
+import About from './pages/About';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
 
+            <Route path="/about" element={<About />} />
             <Route path="calculators" element={<CalculatorTools />} />
             <Route
               path="calculators/duration"
