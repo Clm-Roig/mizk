@@ -25,6 +25,8 @@ function ToolCard({ tool, ...cardProps }: Props) {
   return (
     <Link to={tool.url}>
       <Card
+        bg="linear-gradient(180deg, rgba(180, 180, 200, 0.12), rgba(100, 100, 150, 0.12))"
+        backdropFilter="blur(14px)"
         _hover={{
           boxShadow: 'lg',
           outline: `2px solid ${borderColor}`,
