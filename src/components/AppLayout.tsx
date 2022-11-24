@@ -14,13 +14,12 @@ function AppLayout({ children }: Props) {
   const btnRef = useRef<HTMLButtonElement>(null);
 
   return (
-    <>
+    <Box bgImage="#d5efff" minHeight="100vh">
       <Header onOpenSideMenu={onOpen} />
-
       <Breadcrumb />
       <Box p={4}>{children}</Box>
       <SideMenu btnRef={btnRef} isOpen={isOpen} onClose={onClose} />
-    </>
+    </Box>
   );
 }
 
