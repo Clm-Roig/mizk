@@ -17,7 +17,7 @@ function ButtonGroup(props: ButtonGroupProps) {
 function OperationButtons({ appendToInput }: Props) {
   return (
     <Wrap justify="space-evenly">
-      <ButtonGroup colorScheme="blue">
+      <ButtonGroup colorScheme="primary">
         <Button onClick={() => appendToInput('1day', SupportedOperations.ADD)}>
           +1 day
         </Button>
@@ -32,7 +32,7 @@ function OperationButtons({ appendToInput }: Props) {
         </Button>
       </ButtonGroup>
 
-      <ButtonGroup colorScheme="red">
+      <ButtonGroup colorScheme="accent">
         <Button
           onClick={() => appendToInput('1day', SupportedOperations.SUBSTRACT)}
         >

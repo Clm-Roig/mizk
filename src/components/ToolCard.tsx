@@ -19,21 +19,22 @@ interface Props extends CardProps {
 const getInitials = (type: string) => type.slice(0, 2);
 
 function ToolCard({ tool, ...cardProps }: Props) {
-  const theme = useTheme();
-  // eslint-disable-next-line no-underscore-dangle
-  const borderColor = theme.__cssVars['--chakra-colors-primary-200'];
+  const {
+    colors: { accent, primary },
+  } = useTheme();
+
   return (
     <Link to={tool.url}>
       <Card
-        bg="linear-gradient(180deg, rgba(180, 180, 200, 0.12), rgba(100, 100, 150, 0.12))"
+        bg={`linear-gradient(45deg, ${primary[100]}11, ${primary[100]}44)`}
         backdropFilter="blur(14px)"
         _hover={{
           boxShadow: 'lg',
-          outline: `2px solid ${borderColor}`,
+          outline: `2px solid ${accent[100]}`,
         }}
         outline="2px solid transparent"
         size="sm"
-        transitionDuration="faster"
+        transitionDuration="fast"
         {...cardProps}
       >
         <CardHeader>

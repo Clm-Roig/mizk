@@ -2,17 +2,17 @@ import { defineStyleConfig } from '@chakra-ui/react';
 
 export default defineStyleConfig({
   baseStyle: {
-    color: 'primary.700',
+    color: 'accent.700',
     position: 'relative',
     _hover: {
-      color: 'primary.500',
+      color: 'accent.400',
       textDecoration: 'none',
       _after: {
         transform: 'scaleX(1)',
       },
     },
     _after: {
-      bg: 'primary.300',
+      bg: 'accent.200',
       bottom: 0,
       content: "''",
       height: '2px',

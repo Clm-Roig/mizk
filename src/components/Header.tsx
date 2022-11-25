@@ -8,11 +8,12 @@ type Props = {
 
 function Header({ onOpenSideMenu }: Props) {
   return (
-    <Flex bg="primary.100" alignItems="center" p={2} h="64px">
+    <Flex bg="primary.500" alignItems="center" p={2} h="64px" color="white">
       <IconButton
         aria-label="Open side menu"
         icon={<FaBars />}
         onClick={onOpenSideMenu}
+        color="black"
       />
 
       <Flex alignItems="baseline">

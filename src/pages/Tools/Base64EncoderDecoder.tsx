@@ -33,18 +33,14 @@ function Base64EncoderDecoder() {
       <Heading as="h1">Base 64 encoder / decoder</Heading>
       <VStack spacing={4}>
         <VStack align="left" spacing={2} w="full">
-          <Heading as="h2" size="md">
-            Your text
-          </Heading>
+          <Text fontSize="xl">Your text</Text>
           <Textarea value={inputValue} onChange={handleInputChange} />
         </VStack>
 
         <Icon as={FaExchangeAlt} transform="rotateZ(90deg)" color="gray" />
 
         <VStack align="left" spacing={2} w="full">
-          <Heading as="h2" size="md">
-            Your text in base64
-          </Heading>
+          <Text fontSize="xl">Your text in base64</Text>
           <Textarea
             isInvalid={error !== ''}
             value={base64Value}

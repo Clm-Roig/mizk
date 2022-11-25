@@ -13,7 +13,7 @@ function SectionTitle({ children, isFirst, listSpacing }: Props) {
     <Text
       fontSize="2xl"
       color="white"
-      bg="gray.600"
+      bg="primary.600"
       textAlign="center"
       {...margin}
     >

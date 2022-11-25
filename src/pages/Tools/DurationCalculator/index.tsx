@@ -68,10 +68,10 @@ function DurationCalculator() {
       <Heading as="h1">Duration calculator</Heading>
 
       <Stack spacing={4} mt={4}>
-        <Heading as="h2" size="md">
+        <Text fontSize="2xl">
           Your calculation&nbsp;
           <Tooltip />
-        </Heading>
+        </Text>
 
         <Textarea value={inputValue} onChange={handleInputChange} />
 
