@@ -53,7 +53,7 @@ function DurationCalculator() {
   };
 
   const appendToInput = (value: string, symbol: SupportedOperations) => {
-    if (inputValue === '' && symbol === '-') return;
+    if (inputValue === '' && symbol === SupportedOperations.SUBSTRACT) return;
     if (inputValue === '') {
       setInputValue(`${value} `);
     } else if (inputValue[inputValue.length - 1] === ' ') {
