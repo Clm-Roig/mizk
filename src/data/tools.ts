@@ -3,7 +3,7 @@ import { CALCULATOR, ENCODER_DECODER, IMAGE } from './toolTypes.ts';
 
 const tools: Array<Tool> = [
   {
-    description: 'Add and substract duration, from milliseconds to days.',
+    description: 'Add and substract durations, from milliseconds to days.',
     keywords: ['calculator', 'duration', 'second', 'hour', 'minut', 'day'],
     menuName: 'Duration',
     name: 'Duration calculator',
@@ -31,7 +31,7 @@ const tools: Array<Tool> = [
     url: '/images/convert',
   },
   {
-    description: 'Encode or decode a base 64 string',
+    description: 'Encode or decode base 64 strings.',
     keywords: ['encoder', 'decoder', 'base64'],
     menuName: 'Base64',
     name: 'Base64 encoder / decoder',
@@ -39,7 +39,7 @@ const tools: Array<Tool> = [
     url: '/encoders-decoders/base64',
   },
   {
-    description: 'Crop an image to your desired size.',
+    description: 'Crop images to your desired size.',
     keywords: ['image', 'crop', 'size', 'resize'],
     menuName: 'Cropper',
     name: 'Image cropper',
