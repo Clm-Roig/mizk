@@ -19,9 +19,9 @@ const rgbToHsl = (color: RGBColor): HSLColor => {
       ? 2 + (newB - newR) / c
       : 4 + (newR - newG) / c);
   return {
-    h: Math.trunc(60 * (h < 0 ? h + 6 : h)),
-    s: Math.trunc(f ? (c / f) * 100 : 0),
-    l: Math.trunc(((v + v - c) / 2) * 100),
+    h: Math.round(60 * (h < 0 ? h + 6 : h)),
+    s: Math.round(f ? (c / f) * 100 : 0),
+    l: Math.round(((v + v - c) / 2) * 100),
   };
 };
 
@@ -34,9 +34,9 @@ const hslToRgb = (h: number, s: number, l: number) => {
   const f = (n: number, k = (n + h / 30) % 12) =>
     lBetween0And1 - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
   return {
-    r: Math.trunc(f(0) * 255),
-    g: Math.trunc(f(8) * 255),
-    b: Math.trunc(f(4) * 255),
+    r: Math.round(f(0) * 255),
+    g: Math.round(f(8) * 255),
+    b: Math.round(f(4) * 255),
   };
 };
 
