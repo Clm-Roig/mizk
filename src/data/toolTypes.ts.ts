@@ -1,4 +1,9 @@
-import { FaCalculator, FaExchangeAlt, FaImage } from 'react-icons/fa';
+import {
+  FaCalculator,
+  FaExchangeAlt,
+  FaImage,
+  FaPalette,
+} from 'react-icons/fa';
 import { ToolType } from '../models/ToolType';
 
 export const CALCULATOR: ToolType = {
@@ -6,6 +11,12 @@ export const CALCULATOR: ToolType = {
   name: 'Calculator',
   pluralName: 'Calculators',
   url: '/calculators',
+};
+export const COLOR: ToolType = {
+  icon: FaPalette,
+  name: 'Color',
+  pluralName: 'Colors',
+  url: '/colors',
 };
 export const ENCODER_DECODER: ToolType = {
   icon: FaExchangeAlt,

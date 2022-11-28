@@ -12,6 +12,8 @@ import EncoderDecoderTools from './pages/Tools/EncoderDecoderTools';
 import Base64EncoderDecoder from './pages/Tools/Base64EncoderDecoder';
 import ImageCropper from './pages/Tools/ImageCropper';
 import About from './pages/About';
+import ColorConverter from './pages/Tools/Colors/ColorConverter';
+import ColorTools from './pages/Tools/ColorTools';
 
 function App() {
   return (
@@ -37,6 +39,9 @@ function App() {
               path="encoders-decoders/base64"
               element={<Base64EncoderDecoder />}
             />
+
+            <Route path="colors" element={<ColorTools />} />
+            <Route path="colors/converter" element={<ColorConverter />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
