@@ -1,18 +1,9 @@
-import {
-  Box,
-  Flex,
-  FormControl,
-  FormLabel,
-  Heading,
-  Input,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { Box, BoxProps, Flex, Heading, Text } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-import CopyButton from '../../../components/CopyButton';
-import ColorPartPicker from './ColorPartPicker';
-import { RGBColor } from './types';
-import { hexToRgb, hslToRgb, rgbToHex, rgbToHsl } from './converters';
+import { rgbToHex, rgbToHsl } from './converters';
+import RgbaEditor from './RgbaEditor';
+import HslEditor from './HslEditor';
+import HexEditor from './HexEditor';
 
 const DEFAULT_VALUE = {
   r: 100,
@@ -23,6 +14,13 @@ const DEFAULT_VALUE = {
   s: 0,
   l: 39,
   hex: '646464',
+};
+
+const boxProps: BoxProps = {
+  border: '1px',
+  borderColor: 'gray.400',
+  borderRadius: 4,
+  p: 4,
 };
 
 function ColorConverter() {
@@ -37,50 +35,8 @@ function ColorConverter() {
 
   const [hex, setHex] = useState(DEFAULT_VALUE.hex); // no # before the hex
 
-  const handleHexChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const newHex = e.currentTarget.value.trim().replace('#', '');
-    setHex(newHex);
-    const newRgbValues = hexToRgb(newHex);
-    if (newRgbValues) {
-      setR(newRgbValues.r);
-      setG(newRgbValues.g);
-      setB(newRgbValues.b);
-      setA(1); // hex doesn't handle A value
-      const newHslValues = rgbToHsl(newRgbValues);
-      setH(newHslValues.h);
-      setS(newHslValues.s);
-      setL(newHslValues.l);
-    }
-  };
-
-  const updateRgbFromHsl = (newValues: RGBColor) => {
-    setR(newValues.r);
-    setG(newValues.g);
-    setB(newValues.b);
-    setA(1); // hsl doesn't handle A value
-    const newHexValue = rgbToHex(newValues);
-    setHex(newHexValue);
-  };
-
-  const handleHChange = (vString: string, vNumber: number) => {
-    setH(vNumber);
-    const newRgbValues = hslToRgb(vNumber, s, l);
-    updateRgbFromHsl(newRgbValues);
-  };
-
-  const handleSChange = (vString: string, vNumber: number) => {
-    setS(vNumber);
-    const newRgbValues = hslToRgb(h, vNumber, l);
-    updateRgbFromHsl(newRgbValues);
-  };
-
-  const handleLChange = (vString: string, vNumber: number) => {
-    setL(vNumber);
-    const newRgbValues = hslToRgb(h, s, vNumber);
-    updateRgbFromHsl(newRgbValues);
-  };
-
   useEffect(() => {
+    // Everytime r,g or b values are updated, update hex and hsl
     setHex(rgbToHex({ r, g, b }));
     const newHslValues = rgbToHsl({ r, g, b });
     setH(newHslValues.h);
@@ -97,99 +53,43 @@ function ColorConverter() {
         flexWrap="wrap"
         justifyContent="center"
       >
-        <Box border="1px" borderColor="gray.400" borderRadius={4} p={4}>
-          <VStack spacing={4}>
-            <ColorPartPicker
-              label="R"
-              onChange={(vString, vNumber) =>
-                setR(Number.isNaN(vNumber) ? 0 : vNumber)
-              }
-              value={r}
-              min={0}
-              max={255}
-              step={5}
-            />
-            <ColorPartPicker
-              label="G"
-              onChange={(vString, vNumber) =>
-                setG(Number.isNaN(vNumber) ? 0 : vNumber)
-              }
-              value={g}
-              min={0}
-              max={255}
-              step={5}
-            />
-            <ColorPartPicker
-              label="B"
-              onChange={(vString, vNumber) =>
-                setB(Number.isNaN(vNumber) ? 0 : vNumber)
-              }
-              value={b}
-              min={0}
-              max={255}
-              step={5}
-            />
-            <ColorPartPicker
-              label="A"
-              onChange={(vString, vNumber) =>
-                setA(Number.isNaN(vNumber) ? 0 : vNumber)
-              }
-              value={a}
-              min={0}
-              max={1}
-              step={0.05}
-            />
-            <Box position="relative" w="full">
-              <Input isReadOnly value={`rgba(${r}, ${g}, ${b}, ${a})`} />
-              <CopyButton valueToCopy={`rgba(${r}, ${g}, ${b}, ${a})`} />
-            </Box>
-          </VStack>
+        <Box {...boxProps}>
+          <RgbaEditor
+            r={r}
+            g={g}
+            b={b}
+            a={a}
+            setR={setR}
+            setG={setG}
+            setB={setB}
+            setA={setA}
+          />
         </Box>
-        <Box border="1px" borderColor="gray.400" borderRadius={4} p={4}>
-          <VStack spacing={4}>
-            <ColorPartPicker
-              label="H"
-              onChange={handleHChange}
-              value={h}
-              min={0}
-              max={360}
-              step={5}
-            />
-            <ColorPartPicker
-              label="S"
-              onChange={handleSChange}
-              value={s}
-              min={0}
-              max={100}
-              step={5}
-            />
-            <ColorPartPicker
-              label="L"
-              onChange={handleLChange}
-              value={l}
-              min={0}
-              max={100}
-              step={5}
-            />
-            <Box position="relative" w="full">
-              <Input isReadOnly value={`hsl(${h}, ${s}%, ${l}%)`} />
-              <CopyButton valueToCopy={`hsl(${h}, ${s}%, ${l}%)`} />
-            </Box>
-          </VStack>
+        <Box {...boxProps}>
+          <HslEditor
+            h={h}
+            s={s}
+            l={l}
+            setH={setH}
+            setS={setS}
+            setL={setL}
+            setR={setR}
+            setG={setG}
+            setB={setB}
+          />
         </Box>
-        <Box border="1px" borderColor="gray.400" borderRadius={4} p={4}>
-          <FormControl width="fit-content" display="flex" alignItems="center">
-            <FormLabel>Hex</FormLabel>
-            <Input value={`#${hex}`} onChange={handleHexChange} />
-            <CopyButton
-              valueToCopy={`#${hex}`}
-              successMessage={`Hex value (#${hex}) copied to your clipboard!`}
-            />
-          </FormControl>
+        <Box {...boxProps}>
+          <HexEditor
+            hex={hex}
+            setHex={setHex}
+            setR={setR}
+            setG={setG}
+            setB={setB}
+          />
         </Box>
       </Flex>
       <br />
-      <Box border="1px" borderColor="gray.400" borderRadius={4} p={2}>
+      <Box {...boxProps} p={2}>
         <Flex
           width="100%"
           height="200px"
