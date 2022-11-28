@@ -30,7 +30,7 @@ function Base64EncoderDecoder() {
 
   return (
     <>
-      <Heading as="h1">Base 64 encoder / decoder</Heading>
+      <Heading as="h1">Base64 encoder / decoder</Heading>
       <VStack spacing={4}>
         <VStack align="left" spacing={2} w="full">
           <Text fontSize="xl">Your text</Text>

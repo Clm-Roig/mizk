@@ -31,7 +31,7 @@ const tools: Array<Tool> = [
     url: '/images/convert',
   },
   {
-    description: 'Encode or decode base 64 strings.',
+    description: 'Encode or decode base64 strings.',
     keywords: ['encoder', 'decoder', 'base64'],
     menuName: 'Base64',
     name: 'Base64 encoder / decoder',
