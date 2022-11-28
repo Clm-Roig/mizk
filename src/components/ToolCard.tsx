@@ -1,11 +1,11 @@
 import {
-  Avatar,
   Card,
   CardBody,
   CardHeader,
   CardProps,
   Heading,
   HStack,
+  Icon,
   Text,
   useTheme,
 } from '@chakra-ui/react';
@@ -15,8 +15,6 @@ import { Tool } from '../models/Tool';
 interface Props extends CardProps {
   tool: Tool;
 }
-
-const getInitials = (type: string) => type.slice(0, 2);
 
 function ToolCard({ tool, ...cardProps }: Props) {
   const {
@@ -39,8 +37,8 @@ function ToolCard({ tool, ...cardProps }: Props) {
       >
         <CardHeader>
           <HStack>
+            <Icon as={tool.type.icon} color="accent.600" />
             <Heading size="md">{tool.name}</Heading>
-            <Avatar size="sm" name={tool.type.name} getInitials={getInitials} />
           </HStack>
         </CardHeader>
         <CardBody>
