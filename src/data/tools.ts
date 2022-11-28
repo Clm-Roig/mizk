@@ -1,5 +1,5 @@
 import { Tool } from '../models/Tool';
-import { CALCULATOR, ENCODER_DECODER, IMAGE } from './toolTypes.ts';
+import { CALCULATOR, COLOR, ENCODER_DECODER, IMAGE } from './toolTypes.ts';
 
 const tools: Array<Tool> = [
   {
@@ -45,6 +45,14 @@ const tools: Array<Tool> = [
     name: 'Image cropper',
     type: IMAGE,
     url: '/images/crop',
+  },
+  {
+    description: 'Convert a color from an to hex, rgba and hsl.',
+    keywords: ['color', 'convert', 'rgb', 'hex', 'hsl'],
+    menuName: 'Converter',
+    name: 'Color converter',
+    type: COLOR,
+    url: '/colors/converter',
   },
 ];
 
