@@ -12,7 +12,7 @@ import React, { useEffect, useState } from 'react';
 import CopyButton from '../../../components/CopyButton';
 import ColorPartPicker from './ColorPartPicker';
 import { RGBColor } from './types';
-import { hexToRgb, hslToRgb, rgbToHex, rgbToHsl } from './utils';
+import { hexToRgb, hslToRgb, rgbToHex, rgbToHsl } from './converters';
 
 const DEFAULT_VALUE = {
   r: 100,
@@ -97,7 +97,7 @@ function ColorConverter() {
         flexWrap="wrap"
         justifyContent="center"
       >
-        <Box border="1px" borderColor="gray.300" borderRadius={4} p={4}>
+        <Box border="1px" borderColor="gray.400" borderRadius={4} p={4}>
           <VStack spacing={4}>
             <ColorPartPicker
               label="R"
@@ -145,7 +145,7 @@ function ColorConverter() {
             </Box>
           </VStack>
         </Box>
-        <Box border="1px" borderColor="gray.300" borderRadius={4} p={4}>
+        <Box border="1px" borderColor="gray.400" borderRadius={4} p={4}>
           <VStack spacing={4}>
             <ColorPartPicker
               label="H"
@@ -177,7 +177,7 @@ function ColorConverter() {
             </Box>
           </VStack>
         </Box>
-        <Box border="1px" borderColor="gray.300" borderRadius={4} p={4}>
+        <Box border="1px" borderColor="gray.400" borderRadius={4} p={4}>
           <FormControl width="fit-content" display="flex" alignItems="center">
             <FormLabel>Hex</FormLabel>
             <Input value={`#${hex}`} onChange={handleHexChange} />
@@ -189,7 +189,7 @@ function ColorConverter() {
         </Box>
       </Flex>
       <br />
-      <Box border="1px" borderColor="gray.300" borderRadius={4} p={2}>
+      <Box border="1px" borderColor="gray.400" borderRadius={4} p={2}>
         <Flex
           width="100%"
           height="200px"
