@@ -61,7 +61,7 @@ const tools: Array<Tool> = [
     url: '/colors/converter',
   },
   {
-    description: 'Replace all occurences of a string in another string',
+    description: 'Replace all occurences of a string in another string.',
     keywords: ['string', 'replace', 'replacer'],
     menuName: 'Replacer',
     name: 'String replacer',
