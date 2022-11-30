@@ -1,5 +1,11 @@
 import { Tool } from '../models/Tool';
-import { CALCULATOR, COLOR, ENCODER_DECODER, IMAGE } from './toolTypes.ts';
+import {
+  CALCULATOR,
+  COLOR,
+  ENCODER_DECODER,
+  IMAGE,
+  STRING,
+} from './toolTypes.ts';
 
 const tools: Array<Tool> = [
   {
@@ -53,6 +59,14 @@ const tools: Array<Tool> = [
     name: 'Color converter',
     type: COLOR,
     url: '/colors/converter',
+  },
+  {
+    description: 'Replace all occurences of a string in another string',
+    keywords: ['string', 'replace', 'replacer'],
+    menuName: 'Replacer',
+    name: 'String replacer',
+    type: STRING,
+    url: '/strings/replacer',
   },
 ];
 

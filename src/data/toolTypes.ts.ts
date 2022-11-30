@@ -4,6 +4,7 @@ import {
   FaImage,
   FaPalette,
 } from 'react-icons/fa';
+import { TbLetterCase } from 'react-icons/tb';
 import { ToolType } from '../models/ToolType';
 
 export const CALCULATOR: ToolType = {
@@ -29,6 +30,13 @@ export const IMAGE: ToolType = {
   name: 'Image',
   pluralName: 'Images',
   url: '/images',
+};
+
+export const STRING: ToolType = {
+  icon: TbLetterCase,
+  name: 'Sring',
+  pluralName: 'Strings',
+  url: '/strings',
 };
 
 export const toolTypes: Array<ToolType> = [CALCULATOR, ENCODER_DECODER, IMAGE];
