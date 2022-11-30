@@ -14,6 +14,8 @@ import ImageCropper from './pages/Tools/ImageCropper';
 import About from './pages/About';
 import ColorConverter from './pages/Tools/Colors/ColorConverter';
 import ColorTools from './pages/Tools/ColorTools';
+import StringTools from './pages/Tools/StringTools';
+import StringReplacer from './pages/Tools/Strings/StringReplacer';
 
 function App() {
   return (
@@ -42,6 +44,9 @@ function App() {
 
             <Route path="colors" element={<ColorTools />} />
             <Route path="colors/converter" element={<ColorConverter />} />
+
+            <Route path="strings" element={<StringTools />} />
+            <Route path="strings/replacer" element={<StringReplacer />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>

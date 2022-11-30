@@ -19,7 +19,7 @@ function Base64EncoderDecoder() {
       const newInputValue = atob(e.currentTarget.value);
       setInputValue(newInputValue);
     } catch (err) {
-      setError('Your base64 text contains an invalid character.');
+      setError('Your base64 text contains an invalid string.');
     }
   };
 
