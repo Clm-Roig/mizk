@@ -68,6 +68,14 @@ const tools: Array<Tool> = [
     type: STRING,
     url: '/strings/replacer',
   },
+  {
+    description: 'Count the number of words in your sentences.',
+    keywords: ['string', 'words', 'counter'],
+    menuName: 'Word counter',
+    name: 'Word counter',
+    type: STRING,
+    url: '/strings/word-counter',
+  },
 ];
 
 export default tools;
