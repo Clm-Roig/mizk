@@ -76,6 +76,22 @@ const tools: Array<Tool> = [
     type: STRING,
     url: `${STRING.url}/word-counter`,
   },
+  {
+    description:
+      'Convert a temperature from and to Celsius, Farenheit and Kelvin.',
+    keywords: [
+      'temperature',
+      'celsius',
+      'farenheit',
+      'kelvin',
+      'converter',
+      'convert',
+    ],
+    menuName: 'Temperature',
+    name: 'Temperature Converter',
+    type: CALCULATOR_CONVERTER,
+    url: `${CALCULATOR_CONVERTER.url}/temperature`,
+  },
 ];
 
 export default tools;

@@ -1,7 +1,6 @@
 import { Box, Input, VStack } from '@chakra-ui/react';
-import React from 'react';
 import CopyButton from '../../../components/CopyButton';
-import ColorPartPicker from './ColorPartPicker';
+import NumberEditor from '../../../components/NumberEditor';
 import { RGBColor } from './types';
 import { hslToRgb } from './converters';
 
@@ -44,7 +43,7 @@ function HslEditor({ h, s, l, setH, setS, setL, setR, setG, setB }: Props) {
 
   return (
     <VStack spacing={4}>
-      <ColorPartPicker
+      <NumberEditor
         label="H"
         onChange={handleHChange}
         value={h}
@@ -52,7 +51,7 @@ function HslEditor({ h, s, l, setH, setS, setL, setR, setG, setB }: Props) {
         max={360}
         step={5}
       />
-      <ColorPartPicker
+      <NumberEditor
         label="S"
         onChange={handleSChange}
         value={s}
@@ -60,7 +59,7 @@ function HslEditor({ h, s, l, setH, setS, setL, setR, setG, setB }: Props) {
         max={100}
         step={5}
       />
-      <ColorPartPicker
+      <NumberEditor
         label="L"
         onChange={handleLChange}
         value={l}

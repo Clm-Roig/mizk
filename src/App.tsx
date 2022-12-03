@@ -17,6 +17,7 @@ import ColorTools from './pages/Tools/ColorTools';
 import StringTools from './pages/Tools/StringTools';
 import StringReplacer from './pages/Tools/Strings/StringReplacer';
 import WordCounter from './pages/Tools/Strings/WordCounter';
+import TemperatureConverter from './pages/Tools/Calculators/TemperatureConverter';
 
 function App() {
   return (
@@ -34,6 +35,10 @@ function App() {
             <Route
               path="calculators-converters/duration"
               element={<DurationCalculator />}
+            />
+            <Route
+              path="calculators-converters/temperature"
+              element={<TemperatureConverter />}
             />
 
             <Route path="images" element={<ImageTools />} />

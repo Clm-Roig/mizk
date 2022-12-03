@@ -1,6 +1,6 @@
 import { Box, Input, VStack } from '@chakra-ui/react';
 import CopyButton from '../../../components/CopyButton';
-import ColorPartPicker from './ColorPartPicker';
+import NumberEditor from '../../../components/NumberEditor';
 
 interface Props {
   r: number;
@@ -16,7 +16,7 @@ interface Props {
 function RgbaEditor({ r, g, b, a, setR, setG, setB, setA }: Props) {
   return (
     <VStack spacing={4}>
-      <ColorPartPicker
+      <NumberEditor
         label="R"
         onChange={(vString, vNumber) =>
           setR(Number.isNaN(vNumber) ? 0 : vNumber)
@@ -26,7 +26,7 @@ function RgbaEditor({ r, g, b, a, setR, setG, setB, setA }: Props) {
         max={255}
         step={5}
       />
-      <ColorPartPicker
+      <NumberEditor
         label="G"
         onChange={(vString, vNumber) =>
           setG(Number.isNaN(vNumber) ? 0 : vNumber)
@@ -36,7 +36,7 @@ function RgbaEditor({ r, g, b, a, setR, setG, setB, setA }: Props) {
         max={255}
         step={5}
       />
-      <ColorPartPicker
+      <NumberEditor
         label="B"
         onChange={(vString, vNumber) =>
           setB(Number.isNaN(vNumber) ? 0 : vNumber)
@@ -46,7 +46,7 @@ function RgbaEditor({ r, g, b, a, setR, setG, setB, setA }: Props) {
         max={255}
         step={5}
       />
-      <ColorPartPicker
+      <NumberEditor
         label="A"
         onChange={(vString, vNumber) =>
           setA(Number.isNaN(vNumber) ? 0 : vNumber)
