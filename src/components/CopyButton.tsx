@@ -1,12 +1,13 @@
-import { Button, useToast } from '@chakra-ui/react';
+import { Button, ButtonProps, useToast } from '@chakra-ui/react';
 
-interface Props {
+interface Props extends ButtonProps {
   successMessage?: string;
   valueToCopy: string | number;
 }
-function CopyButton({ successMessage, valueToCopy }: Props) {
+function CopyButton({ successMessage, valueToCopy, ...buttonProps }: Props) {
   const disabled = typeof valueToCopy === 'string' ? valueToCopy === '' : false; // always enabled for number because a number can't be null
 
+  const { children } = buttonProps;
   const toast = useToast();
   const copyContent = () => {
     if (valueToCopy) {
@@ -29,8 +30,9 @@ function CopyButton({ successMessage, valueToCopy }: Props) {
       size="xs"
       onClick={copyContent}
       disabled={disabled}
+      {...buttonProps}
     >
-      Copy
+      {children || 'Copy'}
     </Button>
   );
 }

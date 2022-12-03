@@ -16,6 +16,7 @@ import ColorConverter from './pages/Tools/Colors/ColorConverter';
 import ColorTools from './pages/Tools/ColorTools';
 import StringTools from './pages/Tools/StringTools';
 import StringReplacer from './pages/Tools/Strings/StringReplacer';
+import WordCounter from './pages/Tools/Strings/WordCounter';
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
 
             <Route path="strings" element={<StringTools />} />
             <Route path="strings/replacer" element={<StringReplacer />} />
+            <Route path="strings/word-counter" element={<WordCounter />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
