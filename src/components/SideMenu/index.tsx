@@ -40,28 +40,32 @@ function SideMenu({ btnRef, isOpen, onClose }: Props) {
           </ChakraLink>
         </DrawerHeader>
 
-        <DrawerBody>
+        <DrawerBody p={0}>
           <Box>
             <SectionTitle listSpacing={listSpacing} isFirst>
               TOOLS
             </SectionTitle>
-            <Tools listSpacing={listSpacing} onClose={onClose} />
+            <Box m={2}>
+              <Tools listSpacing={listSpacing} onClose={onClose} />
+            </Box>
           </Box>
 
           <Box mt={4}>
             <SectionTitle listSpacing={listSpacing}>PAGES</SectionTitle>
-            <List spacing={listSpacing}>
-              <ListItem>
-                <ChakraLink as={Link} to="/" onClick={onClose}>
-                  Home
-                </ChakraLink>
-              </ListItem>
-              <ListItem>
-                <ChakraLink as={Link} to="/about" onClick={onClose}>
-                  About
-                </ChakraLink>
-              </ListItem>
-            </List>
+            <Box m={2}>
+              <List spacing={listSpacing}>
+                <ListItem>
+                  <ChakraLink as={Link} to="/" onClick={onClose}>
+                    Home
+                  </ChakraLink>
+                </ListItem>
+                <ListItem>
+                  <ChakraLink as={Link} to="/about" onClick={onClose}>
+                    About
+                  </ChakraLink>
+                </ListItem>
+              </List>
+            </Box>
           </Box>
         </DrawerBody>
 

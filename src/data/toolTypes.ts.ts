@@ -7,11 +7,11 @@ import {
 import { TbLetterCase } from 'react-icons/tb';
 import { ToolType } from '../models/ToolType';
 
-export const CALCULATOR: ToolType = {
+export const CALCULATOR_CONVERTER: ToolType = {
   icon: FaCalculator,
-  name: 'Calculator',
-  pluralName: 'Calculators',
-  url: '/calculators',
+  name: 'Calculator / Converter',
+  pluralName: 'Calculators / Converters',
+  url: '/calculators-converters',
 };
 export const COLOR: ToolType = {
   icon: FaPalette,
@@ -39,4 +39,8 @@ export const STRING: ToolType = {
   url: '/strings',
 };
 
-export const toolTypes: Array<ToolType> = [CALCULATOR, ENCODER_DECODER, IMAGE];
+export const toolTypes: Array<ToolType> = [
+  CALCULATOR_CONVERTER,
+  ENCODER_DECODER,
+  IMAGE,
+];
