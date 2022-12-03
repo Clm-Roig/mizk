@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import parse from 'parse-duration';
 import React, { useEffect, useState } from 'react';
-import Textarea from '../../../components/Textarea';
+import Textarea from '../../../../components/Textarea';
 
 import computeDurationToString from './computeDurationToString';
 import OperationButtons from './OperationButtons';

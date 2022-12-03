@@ -2,6 +2,7 @@ import {
   Box,
   FormControl,
   FormLabel,
+  FormLabelProps,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
@@ -9,15 +10,18 @@ import {
   NumberInputProps,
   NumberInputStepper,
 } from '@chakra-ui/react';
-import CopyButton from '../../../components/CopyButton';
+import CopyButton from './CopyButton';
 
 interface Props extends NumberInputProps {
   label: string;
+  formLabelProps?: FormLabelProps;
 }
-function ColorPartPicker({ label, ...numberInputProps }: Props) {
+function NumberEditor({ label, formLabelProps, ...numberInputProps }: Props) {
   return (
     <FormControl display="flex" alignItems="center">
-      <FormLabel marginY={0}>{label}</FormLabel>
+      <FormLabel marginY={0} {...formLabelProps}>
+        {label}
+      </FormLabel>
       <NumberInput {...numberInputProps} allowMouseWheel>
         <NumberInputField />
         <NumberInputStepper>
@@ -28,10 +32,10 @@ function ColorPartPicker({ label, ...numberInputProps }: Props) {
       <Box position="absolute" top={2} right={8}>
         <CopyButton
           successMessage={`${label} value (${numberInputProps.value}) copied to your clipboard!`}
-          valueToCopy={numberInputProps.value || 0}
+          valueToCopy={numberInputProps.value as string | number}
         />
       </Box>
     </FormControl>
   );
 }
-export default ColorPartPicker;
+export default NumberEditor;

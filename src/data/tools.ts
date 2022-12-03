@@ -1,6 +1,6 @@
 import { Tool } from '../models/Tool';
 import {
-  CALCULATOR,
+  CALCULATOR_CONVERTER,
   COLOR,
   ENCODER_DECODER,
   IMAGE,
@@ -13,8 +13,8 @@ const tools: Array<Tool> = [
     keywords: ['calculator', 'duration', 'second', 'hour', 'minut', 'day'],
     menuName: 'Duration',
     name: 'Duration calculator',
-    type: CALCULATOR,
-    url: '/calculators/duration',
+    type: CALCULATOR_CONVERTER,
+    url: `${CALCULATOR_CONVERTER.url}/duration`,
   },
   {
     description: 'Convert image from and to various formats.',
@@ -34,7 +34,7 @@ const tools: Array<Tool> = [
     menuName: 'Converter',
     name: 'Image converter',
     type: IMAGE,
-    url: '/images/convert',
+    url: `${IMAGE.url}/convert`,
   },
   {
     description: 'Encode or decode base64 strings.',
@@ -42,7 +42,7 @@ const tools: Array<Tool> = [
     menuName: 'Base64',
     name: 'Base64 encoder / decoder',
     type: ENCODER_DECODER,
-    url: '/encoders-decoders/base64',
+    url: `${ENCODER_DECODER.url}/base64`,
   },
   {
     description: 'Crop images to your desired size.',
@@ -50,7 +50,7 @@ const tools: Array<Tool> = [
     menuName: 'Cropper',
     name: 'Image cropper',
     type: IMAGE,
-    url: '/images/crop',
+    url: `${IMAGE.url}/crop`,
   },
   {
     description: 'Convert a color from an to hex, rgba and hsl.',
@@ -58,7 +58,7 @@ const tools: Array<Tool> = [
     menuName: 'Converter',
     name: 'Color converter',
     type: COLOR,
-    url: '/colors/converter',
+    url: `${COLOR.url}/converter`,
   },
   {
     description: 'Replace all occurences of a string in another string.',
@@ -66,7 +66,7 @@ const tools: Array<Tool> = [
     menuName: 'Replacer',
     name: 'String replacer',
     type: STRING,
-    url: '/strings/replacer',
+    url: `${STRING.url}/replacer`,
   },
   {
     description: 'Count the number of words in your sentences.',
@@ -74,7 +74,23 @@ const tools: Array<Tool> = [
     menuName: 'Word counter',
     name: 'Word counter',
     type: STRING,
-    url: '/strings/word-counter',
+    url: `${STRING.url}/word-counter`,
+  },
+  {
+    description:
+      'Convert a temperature from and to Celsius, Farenheit and Kelvin.',
+    keywords: [
+      'temperature',
+      'celsius',
+      'farenheit',
+      'kelvin',
+      'converter',
+      'convert',
+    ],
+    menuName: 'Temperature',
+    name: 'Temperature Converter',
+    type: CALCULATOR_CONVERTER,
+    url: `${CALCULATOR_CONVERTER.url}/temperature`,
   },
 ];
 
