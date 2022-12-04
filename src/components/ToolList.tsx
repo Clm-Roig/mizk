@@ -14,7 +14,7 @@ function ToolList({ tools }: Props) {
   return (
     <>
       <ToolSearchBar tools={tools} setFoundTools={setFoundTools} />
-      <Divider my={4} />
+      <Divider my={[2, 4]} />
       <SimpleGrid spacing={4} minChildWidth="250px" w="full">
         {foundTools.map((t) => (
           <Box key={t.name} maxWidth="350px">

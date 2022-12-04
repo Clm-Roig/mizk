@@ -18,7 +18,7 @@ function AppLayout({ children }: Props) {
       <Header onOpenSideMenu={onOpen} />
       <Breadcrumb />
       <Container maxW="container.xl">
-        <Box p={4}>{children}</Box>
+        <Box p={[2, 4]}>{children}</Box>
       </Container>
       <SideMenu btnRef={btnRef} isOpen={isOpen} onClose={onClose} />
     </Box>
