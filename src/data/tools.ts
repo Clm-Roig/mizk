@@ -88,7 +88,7 @@ const tools: Array<Tool> = [
       'convert',
     ],
     menuName: 'Temperature',
-    name: 'Temperature Converter',
+    name: 'Temperature converter',
     type: CALCULATOR_CONVERTER,
     url: `${CALCULATOR_CONVERTER.url}/temperature`,
   },
