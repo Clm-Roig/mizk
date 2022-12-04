@@ -23,11 +23,13 @@ function CopyButton({ successMessage, valueToCopy, ...buttonProps }: Props) {
   };
   return (
     <Button
+      colorScheme="primary"
       zIndex={1}
       position="absolute"
       top={0}
       right={0}
       size="xs"
+      fontSize="2xs"
       onClick={copyContent}
       disabled={disabled}
       {...buttonProps}
