@@ -10,7 +10,7 @@ function Home() {
   });
   return (
     <>
-      <Heading as="h1">All our tools</Heading>
+      <Heading as="h1">All tools</Heading>
       <ToolList tools={sortedTools} />
     </>
   );
