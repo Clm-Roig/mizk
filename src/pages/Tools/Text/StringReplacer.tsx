@@ -68,19 +68,19 @@ function StringReplacer() {
     <>
       <Heading as="h1">String replacer</Heading>
 
-      <FormLabel htmlFor="is-case-sensitive">
-        <Switch
-          id="is-case-sensitive"
-          isChecked={isCaseSensitive}
-          onChange={setIsCaseSensitive.toggle}
-          mr={2}
-        />
-        {`Case ${isCaseSensitive ? '' : 'in'}sensitive`}
-      </FormLabel>
       <VStack spacing={4}>
         <VStack align="left" spacing={2} w="full">
           <Text fontSize="xl">Your text</Text>
           <Textarea value={inputText} onChange={handleInputChange} />
+          <FormLabel htmlFor="is-case-sensitive">
+            <Switch
+              id="is-case-sensitive"
+              isChecked={isCaseSensitive}
+              onChange={setIsCaseSensitive.toggle}
+              mr={2}
+            />
+            {`Case ${isCaseSensitive ? '' : 'in'}sensitive`}
+          </FormLabel>
         </VStack>
 
         <HStack spacing={2} w="full" align="baseline">
