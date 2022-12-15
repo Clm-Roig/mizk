@@ -4,7 +4,7 @@ import {
   COLOR,
   ENCODER_DECODER,
   IMAGE,
-  STRING,
+  TEXT,
 } from './toolTypes.ts';
 
 const tools: Array<Tool> = [
@@ -65,16 +65,16 @@ const tools: Array<Tool> = [
     keywords: ['string', 'replace', 'replacer'],
     menuName: 'Replacer',
     name: 'String replacer',
-    type: STRING,
-    url: `${STRING.url}/replacer`,
+    type: TEXT,
+    url: `${TEXT.url}/replacer`,
   },
   {
     description: 'Count the number of words in your sentences.',
     keywords: ['string', 'words', 'counter'],
     menuName: 'Word counter',
     name: 'Word counter',
-    type: STRING,
-    url: `${STRING.url}/word-counter`,
+    type: TEXT,
+    url: `${TEXT.url}/word-counter`,
   },
   {
     description:
@@ -91,6 +91,14 @@ const tools: Array<Tool> = [
     name: 'Temperature converter',
     type: CALCULATOR_CONVERTER,
     url: `${CALCULATOR_CONVERTER.url}/temperature`,
+  },
+  {
+    description: 'Find the maximum and minimum value of a list of numbers.',
+    keywords: ['number', 'max', 'min', 'maximum', 'minimum', 'range', 'find'],
+    menuName: 'Min / Max finder',
+    name: 'Min / Max finder',
+    type: TEXT,
+    url: `${TEXT.url}/min-max-finder`,
   },
 ];
 

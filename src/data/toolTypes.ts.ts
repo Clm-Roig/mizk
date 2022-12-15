@@ -32,15 +32,9 @@ export const IMAGE: ToolType = {
   url: '/images',
 };
 
-export const STRING: ToolType = {
+export const TEXT: ToolType = {
   icon: TbLetterCase,
-  name: 'Sring',
-  pluralName: 'Strings',
-  url: '/strings',
+  name: 'Text',
+  pluralName: 'Texts',
+  url: '/texts',
 };
-
-export const toolTypes: Array<ToolType> = [
-  CALCULATOR_CONVERTER,
-  ENCODER_DECODER,
-  IMAGE,
-];

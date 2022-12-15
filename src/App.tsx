@@ -14,10 +14,18 @@ import ImageCropper from './pages/Tools/ImageCropper';
 import About from './pages/About';
 import ColorConverter from './pages/Tools/Colors/ColorConverter';
 import ColorTools from './pages/Tools/ColorTools';
-import StringTools from './pages/Tools/StringTools';
-import StringReplacer from './pages/Tools/Strings/StringReplacer';
-import WordCounter from './pages/Tools/Strings/WordCounter';
+import TextTools from './pages/Tools/TextTools';
+import StringReplacer from './pages/Tools/Text/StringReplacer';
+import WordCounter from './pages/Tools/Text/WordCounter';
 import TemperatureConverter from './pages/Tools/Calculators/TemperatureConverter';
+import {
+  CALCULATOR_CONVERTER,
+  COLOR,
+  ENCODER_DECODER,
+  IMAGE,
+  TEXT,
+} from './data/toolTypes.ts';
+import MinMaxFinder from './pages/Tools/Text/MinMaxFinder';
 
 function App() {
   return (
@@ -26,37 +34,55 @@ function App() {
         <AppLayout>
           <Routes>
             <Route path="/" element={<Home />} />
-
             <Route path="/about" element={<About />} />
+
+            {/* ===== Calculator / converter tools ===== */}
             <Route
-              path="calculators-converters"
+              path={CALCULATOR_CONVERTER.url}
               element={<CalculatorConverterTools />}
             />
             <Route
-              path="calculators-converters/duration"
+              path={`${CALCULATOR_CONVERTER.url}/duration`}
               element={<DurationCalculator />}
             />
             <Route
-              path="calculators-converters/temperature"
+              path={`${CALCULATOR_CONVERTER.url}/temperature`}
               element={<TemperatureConverter />}
             />
 
-            <Route path="images" element={<ImageTools />} />
-            <Route path="images/convert" element={<ImageConverter />} />
-            <Route path="images/crop" element={<ImageCropper />} />
+            {/* ===== Image tools ===== */}
+            <Route path={IMAGE.url} element={<ImageTools />} />
+            <Route path={`${IMAGE.url}/convert`} element={<ImageConverter />} />
+            <Route path={`${IMAGE.url}/crop`} element={<ImageCropper />} />
 
-            <Route path="encoders-decoders" element={<EncoderDecoderTools />} />
+            {/* ===== Encoder / decoder tools ===== */}
             <Route
-              path="encoders-decoders/base64"
+              path={ENCODER_DECODER.url}
+              element={<EncoderDecoderTools />}
+            />
+            <Route
+              path={`${ENCODER_DECODER.url}/base64`}
               element={<Base64EncoderDecoder />}
             />
 
-            <Route path="colors" element={<ColorTools />} />
-            <Route path="colors/converter" element={<ColorConverter />} />
+            {/* ===== Color tools ===== */}
+            <Route path={COLOR.url} element={<ColorTools />} />
+            <Route
+              path={`${COLOR.url}/converter`}
+              element={<ColorConverter />}
+            />
 
-            <Route path="strings" element={<StringTools />} />
-            <Route path="strings/replacer" element={<StringReplacer />} />
-            <Route path="strings/word-counter" element={<WordCounter />} />
+            {/* ===== Text tools ===== */}
+            <Route path={TEXT.url} element={<TextTools />} />
+            <Route path={`${TEXT.url}/replacer`} element={<StringReplacer />} />
+            <Route
+              path={`${TEXT.url}/word-counter`}
+              element={<WordCounter />}
+            />
+            <Route
+              path={`${TEXT.url}/min-max-finder`}
+              element={<MinMaxFinder />}
+            />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
