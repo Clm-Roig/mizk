@@ -13,6 +13,7 @@ import {
 import { useCallback, useEffect, useState } from 'react';
 import { FaExchangeAlt } from 'react-icons/fa';
 import Textarea from '../../../components/Textarea';
+import sanitizeRegexpInput from '../../../utils/sanitizeRegexpInput';
 
 function StringReplacer() {
   const [inputText, setInputText] = useState('');
@@ -42,7 +43,9 @@ function StringReplacer() {
   };
 
   const computeResult = useCallback(() => {
-    const newReplaced = isCaseSensitive ? replaced : replaced.toLowerCase();
+    const newReplaced = sanitizeRegexpInput(
+      isCaseSensitive ? replaced : replaced.toLowerCase()
+    );
     const regExpFlags = `g${isCaseSensitive ? '' : 'i'}`;
     const result = inputText.replaceAll(
       new RegExp(newReplaced, regExpFlags),
