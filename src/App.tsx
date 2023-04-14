@@ -26,6 +26,7 @@ import {
   TEXT,
 } from './data/toolTypes.ts';
 import MinMaxFinder from './pages/Tools/Text/MinMaxFinder';
+import ListSorter from './pages/Tools/Text/ListSorter';
 
 function App() {
   return (
@@ -83,6 +84,7 @@ function App() {
               path={`${TEXT.url}/min-max-finder`}
               element={<MinMaxFinder />}
             />
+            <Route path={`${TEXT.url}/list-sorter`} element={<ListSorter />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
