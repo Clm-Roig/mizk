@@ -100,6 +100,22 @@ const tools: Array<Tool> = [
     type: TEXT,
     url: `${TEXT.url}/min-max-finder`,
   },
+  {
+    description: 'Order a list of words or numbers.',
+    keywords: [
+      'list',
+      'order',
+      'sort',
+      'alphabetical',
+      'sorter',
+      'number',
+      'words',
+    ],
+    menuName: 'List sorter',
+    name: 'List sorter',
+    type: TEXT,
+    url: `${TEXT.url}/list-sorter`,
+  },
 ];
 
 export default tools;
