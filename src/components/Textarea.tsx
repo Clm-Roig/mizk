@@ -35,7 +35,7 @@ function Textarea({ withCopyButton = true, ...textAreaProps }: Props) {
       >
         {textAreaProps.children}
       </ChakraTextarea>
-      {withCopyButton && <CopyButton valueToCopy={ref?.current?.value || ''} />}
+      {withCopyButton && <CopyButton valueToCopy={value?.toString() || ''} />}
     </Box>
   );
 }
