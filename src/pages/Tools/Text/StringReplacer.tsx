@@ -1,5 +1,6 @@
 import {
   Button,
+  FormControl,
   FormLabel,
   Heading,
   HStack,
@@ -75,15 +76,17 @@ function StringReplacer() {
         <VStack align="left" spacing={2} w="full">
           <Text fontSize="xl">Your text</Text>
           <Textarea value={inputText} onChange={handleInputChange} />
-          <FormLabel htmlFor="is-case-sensitive">
+          <FormControl display="flex" alignItems="center">
             <Switch
               id="is-case-sensitive"
               isChecked={isCaseSensitive}
               onChange={setIsCaseSensitive.toggle}
               mr={2}
             />
-            {`Case ${isCaseSensitive ? '' : 'in'}sensitive`}
-          </FormLabel>
+            <FormLabel htmlFor="is-case-sensitive" mb={0}>
+              {`Case ${isCaseSensitive ? '' : 'in'}sensitive`}
+            </FormLabel>
+          </FormControl>
         </VStack>
 
         <HStack spacing={2} w="full" align="baseline">
