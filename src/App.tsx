@@ -1,5 +1,6 @@
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
+import { ReactNode } from 'react';
 import Home from './pages/Home';
 import NotFound from './pages/NotFound';
 import theme from './theme';
@@ -28,10 +29,18 @@ import {
 import MinMaxFinder from './pages/Tools/Text/MinMaxFinder';
 import ListSorter from './pages/Tools/Text/ListSorter';
 
+function CustomRouter({ children }: { children: ReactNode }) {
+  return process.env.NODE_ENV === 'test' ? (
+    <span>{children}</span>
+  ) : (
+    <HashRouter>{children}</HashRouter>
+  );
+}
+
 function App() {
   return (
     <ChakraProvider theme={theme}>
-      <HashRouter>
+      <CustomRouter>
         <AppLayout>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -89,7 +98,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AppLayout>
-      </HashRouter>
+      </CustomRouter>
     </ChakraProvider>
   );
 }
