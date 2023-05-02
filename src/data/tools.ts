@@ -2,6 +2,7 @@ import { Tool } from '../models/Tool';
 import {
   CALCULATOR_CONVERTER,
   COLOR,
+  DOMAIN,
   ENCODER_DECODER,
   IMAGE,
   TEXT,
@@ -17,7 +18,7 @@ const tools: Array<Tool> = [
     url: `${CALCULATOR_CONVERTER.url}/duration`,
   },
   {
-    description: 'Convert image from and to various formats.',
+    description: 'Convert image to JPG.',
     keywords: [
       'image',
       'convert',
@@ -32,9 +33,9 @@ const tools: Array<Tool> = [
       'webp',
     ],
     menuName: 'Converter',
-    name: 'Image converter',
+    name: 'To JPG converter',
     type: IMAGE,
-    url: `${IMAGE.url}/convert`,
+    url: `${IMAGE.url}/convert-to-jpg`,
   },
   {
     description: 'Encode or decode base64 strings.',
@@ -115,6 +116,14 @@ const tools: Array<Tool> = [
     name: 'List sorter',
     type: TEXT,
     url: `${TEXT.url}/list-sorter`,
+  },
+  {
+    description: 'Find your IP address.',
+    keywords: ['ip', 'address'],
+    menuName: "What's my IP?",
+    name: "What's my IP?",
+    type: DOMAIN,
+    url: `${DOMAIN.url}/my-ip`,
   },
 ];
 

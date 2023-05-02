@@ -5,16 +5,23 @@ import {
 } from '@chakra-ui/react';
 import { FaChevronRight } from 'react-icons/fa';
 import { Link, useLocation } from 'react-router-dom';
+import tools from '../data/tools';
 
 function Breadcrumb() {
   const location = useLocation();
   const splittedNames = [...new Set(location.pathname.split('/'))];
   const breadcrumb = splittedNames.map((name, idx) => {
     let url = '/';
+    let cleanedName = name.replace('-', ' ') || 'Home';
     for (let i = 1; i <= idx; i += 1) {
       url += `${splittedNames[i]}/`;
     }
-    return { name: name || 'Home', url };
+    if (idx === 2) {
+      // Find the tool
+      const tool = tools.find((t) => t.url === location.pathname);
+      cleanedName = tool?.name || cleanedName;
+    }
+    return { name: cleanedName, url };
   });
 
   return (

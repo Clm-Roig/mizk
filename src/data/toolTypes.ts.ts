@@ -4,7 +4,7 @@ import {
   FaImage,
   FaPalette,
 } from 'react-icons/fa';
-import { TbLetterCase } from 'react-icons/tb';
+import { TbLetterCase, TbWorldWww } from 'react-icons/tb';
 import { ToolType } from '../models/ToolType';
 
 export const CALCULATOR_CONVERTER: ToolType = {
@@ -37,4 +37,11 @@ export const TEXT: ToolType = {
   name: 'Text',
   pluralName: 'Texts',
   url: '/texts',
+};
+
+export const DOMAIN: ToolType = {
+  icon: TbWorldWww,
+  name: 'Domain',
+  pluralName: 'Domain',
+  url: '/domain',
 };

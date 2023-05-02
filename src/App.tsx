@@ -6,7 +6,7 @@ import NotFound from './pages/NotFound';
 import theme from './theme';
 import AppLayout from './components/AppLayout';
 import DurationCalculator from './pages/Tools/Calculators/DurationCalculator';
-import ImageConverter from './pages/Tools/ImageConverter';
+import ToJPGConverter from './pages/Tools/ToJPGConverter';
 import ImageTools from './pages/Tools/ImageTools';
 import CalculatorConverterTools from './pages/Tools/CalculatorConverterTools';
 import EncoderDecoderTools from './pages/Tools/EncoderDecoderTools';
@@ -22,12 +22,15 @@ import TemperatureConverter from './pages/Tools/Calculators/TemperatureConverter
 import {
   CALCULATOR_CONVERTER,
   COLOR,
+  DOMAIN,
   ENCODER_DECODER,
   IMAGE,
   TEXT,
 } from './data/toolTypes.ts';
 import MinMaxFinder from './pages/Tools/Text/MinMaxFinder';
 import ListSorter from './pages/Tools/Text/ListSorter';
+import WhatsMyIp from './pages/Tools/WhatsMyIp';
+import DomainTools from './pages/Tools/DomainTools';
 
 function CustomRouter({ children }: { children: ReactNode }) {
   return process.env.NODE_ENV === 'test' ? (
@@ -62,7 +65,10 @@ function App() {
 
             {/* ===== Image tools ===== */}
             <Route path={IMAGE.url} element={<ImageTools />} />
-            <Route path={`${IMAGE.url}/convert`} element={<ImageConverter />} />
+            <Route
+              path={`${IMAGE.url}/convert-to-jpg`}
+              element={<ToJPGConverter />}
+            />
             <Route path={`${IMAGE.url}/crop`} element={<ImageCropper />} />
 
             {/* ===== Encoder / decoder tools ===== */}
@@ -94,6 +100,10 @@ function App() {
               element={<MinMaxFinder />}
             />
             <Route path={`${TEXT.url}/list-sorter`} element={<ListSorter />} />
+
+            {/* ===== Domain tools ===== */}
+            <Route path={DOMAIN.url} element={<DomainTools />} />
+            <Route path={`${DOMAIN.url}/my-ip`} element={<WhatsMyIp />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>

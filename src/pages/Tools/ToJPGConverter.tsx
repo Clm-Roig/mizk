@@ -23,7 +23,7 @@ const ACCEPTED_FORMATS: Accept = {
   'image/webp': [],
 };
 
-function ImageConverter() {
+function ToJPGConverter() {
   const [imagePath, setImagePath] = useState('');
   const [imageName, setImageName] = useState('');
   const imgRef = useRef<HTMLImageElement>(null);
@@ -70,7 +70,7 @@ function ImageConverter() {
 
   return (
     <>
-      <Heading as="h1">Image converter</Heading>
+      <Heading as="h1">To JPG converter</Heading>
 
       <VStack>
         <Text>Convert an image ({formatList}) to jpg</Text>
@@ -113,4 +113,4 @@ function ImageConverter() {
   );
 }
 
-export default ImageConverter;
+export default ToJPGConverter;
