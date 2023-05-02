@@ -23,7 +23,7 @@ type Props = {
 };
 
 function SideMenu({ btnRef, isOpen, onClose }: Props) {
-  const listSpacing = 4;
+  const listSpacing = 3;
   return (
     <Drawer
       isOpen={isOpen}
@@ -70,7 +70,7 @@ function SideMenu({ btnRef, isOpen, onClose }: Props) {
         </DrawerBody>
 
         <DrawerFooter justifyContent="center">
-          © 2022 -&nbsp;
+          © {new Date().getFullYear()} -&nbsp;
           <ChakraLink href="https://clm-roig.github.io" isExternal>
             Clément ROIG
           </ChakraLink>
