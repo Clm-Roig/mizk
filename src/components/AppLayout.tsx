@@ -23,7 +23,7 @@ function AppLayout({ children }: Props) {
         backgroundAttachment="revert"
         height="100%"
         filter="blur(5px) brightness(200%) hue-rotate(120deg) contrast(60%)"
-        opacity={0.14}
+        opacity={0.06}
         position="absolute"
         top={0}
         transform="rotate(180deg)"
