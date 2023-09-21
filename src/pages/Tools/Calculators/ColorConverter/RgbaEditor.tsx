@@ -1,6 +1,6 @@
 import { Box, Input, VStack } from '@chakra-ui/react';
-import CopyButton from '../../../components/CopyButton';
-import NumberEditor from '../../../components/NumberEditor';
+import CopyButton from '../../../../components/CopyButton';
+import NumberEditor from '../../../../components/NumberEditor';
 
 interface Props {
   r: number;

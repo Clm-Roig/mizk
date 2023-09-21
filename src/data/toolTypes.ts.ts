@@ -1,9 +1,4 @@
-import {
-  FaCalculator,
-  FaExchangeAlt,
-  FaImage,
-  FaPalette,
-} from 'react-icons/fa';
+import { FaCalculator, FaExchangeAlt, FaImage, FaDice } from 'react-icons/fa';
 import { TbLetterCase, TbWorldWww } from 'react-icons/tb';
 import { ToolType } from '../models/ToolType';
 
@@ -13,18 +8,14 @@ export const CALCULATOR_CONVERTER: ToolType = {
   pluralName: 'Calculators / Converters',
   url: '/calculators-converters',
 };
-export const COLOR: ToolType = {
-  icon: FaPalette,
-  name: 'Color',
-  pluralName: 'Colors',
-  url: '/colors',
-};
+
 export const ENCODER_DECODER: ToolType = {
   icon: FaExchangeAlt,
   name: 'Encoder / Decoder',
   pluralName: 'Encoders / Decoders',
   url: '/encoders-decoders',
 };
+
 export const IMAGE: ToolType = {
   icon: FaImage,
   name: 'Image',
@@ -44,4 +35,11 @@ export const DOMAIN: ToolType = {
   name: 'Domain',
   pluralName: 'Domain',
   url: '/domain',
+};
+
+export const GAME: ToolType = {
+  icon: FaDice,
+  name: 'Game',
+  pluralName: 'Games',
+  url: '/games',
 };

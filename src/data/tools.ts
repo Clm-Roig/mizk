@@ -1,9 +1,9 @@
 import { Tool } from '../models/Tool';
 import {
   CALCULATOR_CONVERTER,
-  COLOR,
   DOMAIN,
   ENCODER_DECODER,
+  GAME,
   IMAGE,
   TEXT,
 } from './toolTypes.ts';
@@ -54,12 +54,12 @@ const tools: Array<Tool> = [
     url: `${IMAGE.url}/crop`,
   },
   {
-    description: 'Convert a color from an to hex, rgba and hsl.',
+    description: 'Convert a color from and to hex, rgba and hsl.',
     keywords: ['color', 'convert', 'rgb', 'hex', 'hsl'],
     menuName: 'Converter',
     name: 'Color converter',
-    type: COLOR,
-    url: `${COLOR.url}/converter`,
+    type: CALCULATOR_CONVERTER,
+    url: `${CALCULATOR_CONVERTER.url}/color`,
   },
   {
     description: 'Replace all occurences of a string in another string.',
@@ -124,6 +124,14 @@ const tools: Array<Tool> = [
     name: "What's my IP?",
     type: DOMAIN,
     url: `${DOMAIN.url}/my-ip`,
+  },
+  {
+    description: "Keep track of the players' score.",
+    keywords: ['score', 'counter', 'player'],
+    menuName: 'Scoreboard',
+    name: 'Scoreboard',
+    type: GAME,
+    url: `${GAME.url}/scoreboard`,
   },
 ];
 

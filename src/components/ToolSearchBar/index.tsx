@@ -25,7 +25,9 @@ function ToolSearchBar({ tools, setFoundTools }: Props) {
 
   return (
     <FormControl>
-      <FormLabel>Search tools</FormLabel>
+      <FormLabel>
+        Search among <b>{tools.length}</b> tools
+      </FormLabel>
       <Input size={['sm', 'md']} value={query} onChange={handleInpuChange} />
     </FormControl>
   );

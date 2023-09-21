@@ -1,5 +1,4 @@
 import {
-  Card,
   CardBody,
   CardHeader,
   CardProps,
@@ -11,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { Tool } from '../models/Tool';
+import MCard from './MCard';
 
 interface Props extends CardProps {
   tool: Tool;
@@ -23,16 +23,13 @@ function ToolCard({ tool, ...cardProps }: Props) {
 
   return (
     <Link to={tool.url}>
-      <Card
+      <MCard
         bg={`linear-gradient(45deg, ${primary[200]}11, ${primary[300]}44)`}
         backdropFilter="blur(14px)"
         _hover={{
           boxShadow: 'lg',
           outline: `2px solid ${accent[100]}`,
         }}
-        outline="2px solid transparent"
-        size="sm"
-        transitionDuration="fast"
         {...cardProps}
       >
         <CardHeader>
@@ -44,7 +41,7 @@ function ToolCard({ tool, ...cardProps }: Props) {
         <CardBody>
           <Text>{tool.description}</Text>
         </CardBody>
-      </Card>
+      </MCard>
     </Link>
   );
 }

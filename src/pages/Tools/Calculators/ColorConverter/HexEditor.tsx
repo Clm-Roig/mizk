@@ -1,5 +1,5 @@
 import { FormControl, FormLabel, Input } from '@chakra-ui/react';
-import CopyButton from '../../../components/CopyButton';
+import CopyButton from '../../../../components/CopyButton';
 import { hexToRgb } from './converters';
 
 interface Props {

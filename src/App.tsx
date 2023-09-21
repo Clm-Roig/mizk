@@ -13,15 +13,15 @@ import EncoderDecoderTools from './pages/Tools/EncoderDecoderTools';
 import Base64EncoderDecoder from './pages/Tools/Base64EncoderDecoder';
 import ImageCropper from './pages/Tools/ImageCropper';
 import About from './pages/About';
-import ColorConverter from './pages/Tools/Colors/ColorConverter';
-import ColorTools from './pages/Tools/ColorTools';
+import ColorConverter from './pages/Tools/Calculators/ColorConverter';
+import GameTools from './pages/Tools/GameTools';
 import TextTools from './pages/Tools/TextTools';
 import StringReplacer from './pages/Tools/Text/StringReplacer';
 import WordCounter from './pages/Tools/Text/WordCounter';
 import TemperatureConverter from './pages/Tools/Calculators/TemperatureConverter';
 import {
   CALCULATOR_CONVERTER,
-  COLOR,
+  GAME,
   DOMAIN,
   ENCODER_DECODER,
   IMAGE,
@@ -31,6 +31,7 @@ import MinMaxFinder from './pages/Tools/Text/MinMaxFinder';
 import ListSorter from './pages/Tools/Text/ListSorter';
 import WhatsMyIp from './pages/Tools/WhatsMyIp';
 import DomainTools from './pages/Tools/DomainTools';
+import Scoreboard from './pages/Tools/Scoreboard';
 
 function CustomRouter({ children }: { children: ReactNode }) {
   return process.env.NODE_ENV === 'test' ? (
@@ -62,6 +63,10 @@ function App() {
               path={`${CALCULATOR_CONVERTER.url}/temperature`}
               element={<TemperatureConverter />}
             />
+            <Route
+              path={`${CALCULATOR_CONVERTER.url}/color`}
+              element={<ColorConverter />}
+            />
 
             {/* ===== Image tools ===== */}
             <Route path={IMAGE.url} element={<ImageTools />} />
@@ -81,13 +86,6 @@ function App() {
               element={<Base64EncoderDecoder />}
             />
 
-            {/* ===== Color tools ===== */}
-            <Route path={COLOR.url} element={<ColorTools />} />
-            <Route
-              path={`${COLOR.url}/converter`}
-              element={<ColorConverter />}
-            />
-
             {/* ===== Text tools ===== */}
             <Route path={TEXT.url} element={<TextTools />} />
             <Route path={`${TEXT.url}/replacer`} element={<StringReplacer />} />
@@ -104,6 +102,10 @@ function App() {
             {/* ===== Domain tools ===== */}
             <Route path={DOMAIN.url} element={<DomainTools />} />
             <Route path={`${DOMAIN.url}/my-ip`} element={<WhatsMyIp />} />
+
+            {/* ===== Game tools ===== */}
+            <Route path={GAME.url} element={<GameTools />} />
+            <Route path={`${GAME.url}/scoreboard`} element={<Scoreboard />} />
 
             <Route path="*" element={<NotFound />} />
           </Routes>
