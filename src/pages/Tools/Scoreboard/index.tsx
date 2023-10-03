@@ -1,29 +1,16 @@
-import { FormEvent, useMemo, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { useMemo, useState } from 'react';
 import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Box,
   Button,
   CardBody,
   CardHeader,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
   HStack,
   Heading,
-  Icon,
   IconButton,
-  Input,
   SimpleGrid,
   Text,
   useTheme,
 } from '@chakra-ui/react';
 import {
-  FaArrowRight,
   FaMinus,
   FaPlus,
   FaTrash,
@@ -31,12 +18,16 @@ import {
   FaSortAlphaUp,
   FaSortNumericDown,
   FaSortNumericUp,
+  FaUndo,
 } from 'react-icons/fa';
 import stringToColor from './stringToColor';
 import MCard from '../../../components/MCard';
-import { Player, ScoreModification } from './types';
-import { formatTimeToHHMMSS } from '../../../components/ToolSearchBar/utils';
+import { Player } from './types';
 import SortMenu, { SortType } from '../../../components/SortMenu';
+import History from './History';
+import NewPlayerForm from './NewPlayerForm';
+import useHistoryEntries from './useHistoryEntries';
+import usePlayers from './usePlayers';
 
 const ALPHABETICAL_DOWN_SORT = 'ALPHABETICAL_DOWN_SORT';
 const ALPHABETICAL_UP_SORT = 'ALPHABETICAL_UP_SORT';
@@ -68,67 +59,56 @@ const sortTypes: SortType[] = [
 
 function Scoreboard() {
   const {
-    colors: { accent, red },
+    colors: { red },
   } = useTheme();
-  const [players, setPlayers] = useState<Player[]>([
-    { name: 'Alice', score: 0 },
-    { name: 'John', score: 0 },
-  ]);
+  const {
+    addPlayer,
+    addScoreToPlayer,
+    players,
+    resetPlayersScore,
+    removePlayer,
+  } = usePlayers();
+  const {
+    addHistoryEvent,
+    addScoreChange,
+    deleteHistoryEntries,
+    historyEntries,
+  } = useHistoryEntries();
   const [selectedSortType, setSelectedSortType] = useState<SortType>(
     sortTypes[0]
   );
-  const [newPlayerName, setNewPlayerName] = useState<string>('');
-  const [scoreModifications, setScoreModifications] = useState<
-    ScoreModification[]
-  >([]);
 
-  const isNewPlayerNameValid = players.every(
-    (p) => p.name.toLowerCase() !== newPlayerName.toLowerCase()
-  );
+  const isNewPlayerNameValid = (newPlayerName: string) => {
+    return players.every(
+      (p) => p.name.toLowerCase() !== newPlayerName.trim().toLowerCase()
+    );
+  };
 
-  const onAddPlayer = () => {
-    if (isNewPlayerNameValid) {
-      setPlayers((previousPlayers) => [
-        ...previousPlayers,
-        { name: newPlayerName.trim(), score: 0 },
-      ]);
-      setNewPlayerName('');
+  const handleAddPlayer = (newPlayerName: string) => {
+    addPlayer(newPlayerName);
+    addHistoryEvent(`<b>${newPlayerName}</b> joins the game!`);
+  };
+
+  const handleAddScore = (toUpdatePlayer: Player, addedScore: number) => {
+    addScoreToPlayer(toUpdatePlayer, addedScore);
+    addScoreChange(addedScore, toUpdatePlayer);
+  };
+
+  const handleRemove = (player: Player) => {
+    removePlayer(player);
+    addHistoryEvent(`<b>${player.name}</b> leaves the game!`);
+  };
+
+  const handleChangeSortType = (newSortType: SortType) => {
+    if (newSortType.id !== selectedSortType.id) {
+      setSelectedSortType(newSortType);
     }
   };
 
-  const addScore = (toUpdatePlayer: Player, addedScore: number) => {
-    const updatedPlayers = players.map((p) => {
-      if (p.name === toUpdatePlayer.name) {
-        return { ...p, score: p.score + addedScore };
-      }
-      return p;
-    });
-    setPlayers(updatedPlayers);
-    setScoreModifications((prevScoreHistory) => [
-      {
-        addedScore,
-        date: new Date(),
-        id: uuidv4(),
-        playerName: toUpdatePlayer.name,
-        previousScore: toUpdatePlayer.score,
-        newScore: toUpdatePlayer.score + addedScore,
-      },
-      ...prevScoreHistory,
-    ]);
-  };
-
-  const removePlayer = (player: Player) => {
-    const otherPlayers = players.filter((p) => p.name !== player.name);
-    setPlayers(otherPlayers);
-  };
-
-  const deleteScoreModifications = () => {
-    setScoreModifications([]);
-  };
-
-  const handleOnChangeSortType = (newSortType: SortType) => {
-    if (newSortType.id !== selectedSortType.id) {
-      setSelectedSortType(newSortType);
+  const handleResetScores = () => {
+    if (players.some((p) => p.score !== 0)) {
+      resetPlayersScore();
+      addHistoryEvent('Scores reset!');
     }
   };
 
@@ -156,11 +136,16 @@ function Scoreboard() {
     <>
       <HStack justifyContent="space-between">
         <Heading as="h1">Scoreboard</Heading>
-        <SortMenu
-          onChangeSortType={handleOnChangeSortType}
-          selectedSortType={selectedSortType}
-          sortTypes={sortTypes}
-        />
+        <HStack>
+          <Button leftIcon={<FaUndo />} onClick={handleResetScores}>
+            Reset scores
+          </Button>
+          <SortMenu
+            onChangeSortType={handleChangeSortType}
+            selectedSortType={selectedSortType}
+            sortTypes={sortTypes}
+          />
+        </HStack>
       </HStack>
 
       <SimpleGrid spacing={4} minChildWidth="250px" w="full" mb={4}>
@@ -180,7 +165,7 @@ function Scoreboard() {
                 position="absolute"
                 top={0}
                 right={0}
-                onClick={() => removePlayer(player)}
+                onClick={() => handleRemove(player)}
               />
             </CardHeader>
             <CardBody>
@@ -188,7 +173,7 @@ function Scoreboard() {
                 <IconButton
                   icon={<FaMinus />}
                   aria-label="decrease score"
-                  onClick={() => addScore(player, -1)}
+                  onClick={() => handleAddScore(player, -1)}
                   size="sm"
                   variant="ghost"
                 />
@@ -198,7 +183,7 @@ function Scoreboard() {
                 <IconButton
                   icon={<FaPlus />}
                   aria-label="increase score"
-                  onClick={() => addScore(player, 1)}
+                  onClick={() => handleAddScore(player, 1)}
                   size="sm"
                   variant="ghost"
                 />
@@ -208,81 +193,15 @@ function Scoreboard() {
         ))}
       </SimpleGrid>
 
-      <form onSubmit={onAddPlayer}>
-        <FormControl isInvalid={!isNewPlayerNameValid}>
-          <FormLabel>New player name</FormLabel>
-          <HStack>
-            <Input
-              isInvalid={!isNewPlayerNameValid}
-              onChange={(e: FormEvent<HTMLInputElement>) =>
-                setNewPlayerName(e.currentTarget.value)
-              }
-              required
-              value={newPlayerName}
-            />
+      <NewPlayerForm
+        onAddPlayer={handleAddPlayer}
+        isNewPlayerNameValid={isNewPlayerNameValid}
+      />
 
-            {isNewPlayerNameValid && newPlayerName.trim() && (
-              <Button type="submit" leftIcon={<FaPlus />}>
-                Add player
-              </Button>
-            )}
-          </HStack>
-          {!isNewPlayerNameValid && (
-            <FormErrorMessage>
-              A player with this name already exists.
-            </FormErrorMessage>
-          )}
-        </FormControl>
-      </form>
-
-      <HStack justifyContent="space-between">
-        <Heading as="h2" mt={4} mb={4} size="lg">
-          Score history
-        </Heading>
-        <Button size="sm" color={red[500]} onClick={deleteScoreModifications}>
-          Delete history
-        </Button>
-      </HStack>
-      {scoreModifications?.length > 0 && (
-        <Accordion allowToggle>
-          <AccordionItem>
-            <AccordionButton>
-              <Box as="span" flex="1" textAlign="left">
-                Show
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel>
-              {scoreModifications.map((scoreModification) => {
-                const {
-                  addedScore,
-                  date,
-                  id,
-                  newScore,
-                  playerName,
-                  previousScore,
-                } = scoreModification;
-                const verb = addedScore > 0 ? ' added to' : ' deducted from';
-                const plural = Math.abs(addedScore) > 1 && 's';
-                return (
-                  <span key={id}>
-                    <HStack>
-                      <Text>
-                        <b>{Math.abs(addedScore)}</b> point{plural} {verb}{' '}
-                        <b>{playerName}</b> ({previousScore}{' '}
-                        <Icon as={FaArrowRight} boxSize={2} /> {newScore})
-                      </Text>
-                      <Text fontSize="xs" as="sub" color={accent[400]}>
-                        {formatTimeToHHMMSS(date)}
-                      </Text>
-                    </HStack>
-                  </span>
-                );
-              })}
-            </AccordionPanel>
-          </AccordionItem>
-        </Accordion>
-      )}
+      <History
+        deleteHistory={deleteHistoryEntries}
+        historyEntries={historyEntries}
+      />
     </>
   );
 }
