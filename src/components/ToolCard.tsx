@@ -35,7 +35,9 @@ function ToolCard({ tool, ...cardProps }: Props) {
         <CardHeader>
           <HStack>
             <Icon as={tool.type.icon} color="accent.600" />
-            <Heading size="md">{tool.name}</Heading>
+            <Heading size="md" color="accent.600">
+              {tool.name}
+            </Heading>
           </HStack>
         </CardHeader>
         <CardBody>
