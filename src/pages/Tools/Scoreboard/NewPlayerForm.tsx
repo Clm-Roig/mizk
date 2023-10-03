@@ -17,7 +17,8 @@ type Props = {
 function NewPlayerForm({ isNewPlayerNameValid, onAddPlayer }: Props) {
   const [newPlayerName, setNewPlayerName] = useState<string>('');
 
-  const handleOnSubmit = () => {
+  const handleOnSubmit = (event: FormEvent) => {
+    event.preventDefault();
     onAddPlayer(newPlayerName);
     setNewPlayerName('');
   };
