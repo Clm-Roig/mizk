@@ -5,10 +5,11 @@ import {
 } from '@chakra-ui/react';
 import { FaChevronRight } from 'react-icons/fa';
 import { Link, useLocation } from 'react-router-dom';
-import tools from '../data/tools';
+import useFindCurrentToolByUrl from '../hooks/useFindCurrentToolByUrl';
 
 function Breadcrumb() {
   const location = useLocation();
+  const tool = useFindCurrentToolByUrl();
   const splittedNames = [...new Set(location.pathname.split('/'))];
   const breadcrumb = splittedNames.map((name, idx) => {
     let url = '/';
@@ -17,8 +18,6 @@ function Breadcrumb() {
       url += `${splittedNames[i]}/`;
     }
     if (idx === 2) {
-      // Find the tool
-      const tool = tools.find((t) => t.url === location.pathname);
       cleanedName = tool?.name || cleanedName;
     }
     return { name: cleanedName, url };
