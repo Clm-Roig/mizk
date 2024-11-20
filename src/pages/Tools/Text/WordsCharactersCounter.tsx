@@ -3,21 +3,28 @@ import { useEffect, useState } from 'react';
 import CopyButton from '../../../components/CopyButton';
 import Textarea from '../../../components/Textarea';
 
-function WordCounter() {
+function WordsCharactersCounter() {
   const [inputText, setInputText] = useState('');
-  const [result, setResult] = useState<number>(0);
+  const [wordCount, setWordCount] = useState<number>(0);
+  const [characterCount, setCharacterCount] = useState<number>(0);
 
   const handleInputChange = (e: React.FormEvent<HTMLTextAreaElement>) => {
     setInputText(e.currentTarget.value);
   };
 
   useEffect(() => {
-    setResult(inputText.split(' ').filter((n) => n !== '').length);
+    setWordCount(
+      inputText
+        .trim()
+        .split(' ')
+        .filter((n) => n !== '').length
+    );
+    setCharacterCount(inputText.trim().length);
   }, [inputText]);
 
   return (
     <>
-      <Heading as="h1">Word counter</Heading>
+      <Heading as="h1">Words / characters counter</Heading>
 
       <VStack spacing={4}>
         <VStack align="left" spacing={2} w="full">
@@ -27,16 +34,24 @@ function WordCounter() {
 
         <Center>
           <VStack>
-            <HStack>
-              <Text fontSize="5xl">{result}</Text>
-              <Text fontSize="2xl">word{result > 1 ? 's' : ''}</Text>
-            </HStack>
+            <VStack>
+              <HStack>
+                <Text fontSize="5xl">{wordCount}</Text>
+                <Text fontSize="2xl">word{wordCount > 1 ? 's' : ''}</Text>
+              </HStack>
+              <HStack>
+                <Text fontSize="5xl">{characterCount}</Text>
+                <Text fontSize="2xl">
+                  character{characterCount > 1 ? 's' : ''}
+                </Text>
+              </HStack>
+            </VStack>
             <Box position="relative">
               <CopyButton
-                valueToCopy={result}
+                valueToCopy={wordCount}
                 size="md"
                 position="static"
-                successMessage={`${result} copied to your clipboard!`}
+                successMessage={`${wordCount} copied to your clipboard!`}
               >
                 Copy result
               </CopyButton>
@@ -48,4 +63,4 @@ function WordCounter() {
   );
 }
 
-export default WordCounter;
+export default WordsCharactersCounter;

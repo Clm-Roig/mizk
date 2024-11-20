@@ -10,7 +10,7 @@ function CopyButton({ successMessage, valueToCopy, ...buttonProps }: Props) {
   const { children } = buttonProps;
   const toast = useToast();
   const copyContent = () => {
-    if (valueToCopy) {
+    if (valueToCopy !== '') {
       navigator.clipboard.writeText(valueToCopy.toString());
       toast({
         title: successMessage || 'Content copied to your clipboard!',

@@ -70,12 +70,12 @@ const tools: Array<Tool> = [
     url: `${TEXT.url}/replacer`,
   },
   {
-    description: 'Count the number of words in your sentences.',
-    keywords: ['string', 'words', 'counter'],
-    menuName: 'Word counter',
-    name: 'Word counter',
+    description: 'Count the number of words and characters in your sentences.',
+    keywords: ['string', 'words', 'characters', 'counter'],
+    menuName: 'Word / characters counter',
+    name: 'Word / characters counter',
     type: TEXT,
-    url: `${TEXT.url}/word-counter`,
+    url: `${TEXT.url}/words-characters-counter`,
   },
   {
     description:

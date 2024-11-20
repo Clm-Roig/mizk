@@ -17,7 +17,7 @@ import ColorConverter from './pages/Tools/Calculators/ColorConverter';
 import GameTools from './pages/Tools/GameTools';
 import TextTools from './pages/Tools/TextTools';
 import StringReplacer from './pages/Tools/Text/StringReplacer';
-import WordCounter from './pages/Tools/Text/WordCounter';
+import WordsCharactersCounter from './pages/Tools/Text/WordsCharactersCounter';
 import TemperatureConverter from './pages/Tools/Calculators/TemperatureConverter';
 import {
   CALCULATOR_CONVERTER,
@@ -90,8 +90,8 @@ function App() {
             <Route path={TEXT.url} element={<TextTools />} />
             <Route path={`${TEXT.url}/replacer`} element={<StringReplacer />} />
             <Route
-              path={`${TEXT.url}/word-counter`}
-              element={<WordCounter />}
+              path={`${TEXT.url}/words-characters-counter`}
+              element={<WordsCharactersCounter />}
             />
             <Route
               path={`${TEXT.url}/min-max-finder`}
