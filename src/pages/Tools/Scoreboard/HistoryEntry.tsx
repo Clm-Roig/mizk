@@ -5,6 +5,7 @@ import {
   HistoryEvent,
   isScoreChange,
   isHistoryEvent,
+  isScoreSet,
 } from './types';
 import { formatTimeToHHMMSS } from '../../../components/ToolSearchBar/utils';
 
@@ -40,6 +41,26 @@ function HistoryEntry({ historyEntry }: Props) {
           </Text>
           <Text>
             point{plural} to <b>{playerName}</b> ({previousScore}{' '}
+          </Text>
+          <Icon as={FaArrowRight} boxSize={2.5} />
+          <Text>{newScore})</Text>
+        </HStack>
+        <DateComponent date={date} />
+      </HStack>
+    );
+  }
+  if (isScoreSet(historyEntry)) {
+    const { date, newScore, playerName, previousScore } = historyEntry;
+    const plural = Math.abs(newScore) > 1 && 's';
+    return (
+      <HStack>
+        <HStack>
+          <Text>
+            <b>
+              {playerName}
+              {`'s`}
+            </b>{' '}
+            score set to {newScore} point{plural} ({previousScore}
           </Text>
           <Icon as={FaArrowRight} boxSize={2.5} />
           <Text>{newScore})</Text>

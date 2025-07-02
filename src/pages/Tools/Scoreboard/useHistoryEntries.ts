@@ -22,6 +22,22 @@ function useHistoryEntries() {
     []
   );
 
+  const addScoreSet = useCallback(
+    (newScore: number, toUpdatePlayer: Player) => {
+      setHistoryEntries((prevHistoryEntries) => [
+        {
+          date: new Date(),
+          id: uuidv4(),
+          playerName: toUpdatePlayer.name,
+          previousScore: toUpdatePlayer.score,
+          newScore,
+        },
+        ...prevHistoryEntries,
+      ]);
+    },
+    []
+  );
+
   const addHistoryEvent = useCallback((message: string) => {
     setHistoryEntries((prevHistoryEntries) => [
       {
@@ -40,6 +56,7 @@ function useHistoryEntries() {
   return {
     addHistoryEvent,
     addScoreChange,
+    addScoreSet,
     deleteHistoryEntries,
     historyEntries,
     setHistoryEntries,

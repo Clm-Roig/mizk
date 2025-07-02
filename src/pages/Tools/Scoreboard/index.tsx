@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import {
+  Box,
   Button,
   CardBody,
   CardHeader,
@@ -28,6 +29,7 @@ import History from './History';
 import NewPlayerForm from './NewPlayerForm';
 import useHistoryEntries from './useHistoryEntries';
 import usePlayers from './usePlayers';
+import NumberEditor from '../../../components/NumberEditor';
 
 const ALPHABETICAL_DOWN_SORT = 'ALPHABETICAL_DOWN_SORT';
 const ALPHABETICAL_UP_SORT = 'ALPHABETICAL_UP_SORT';
@@ -65,18 +67,20 @@ function Scoreboard() {
     addPlayer,
     addScoreToPlayer,
     players,
-    resetPlayersScore,
     removePlayer,
+    setScoreForAllPlayers,
   } = usePlayers();
   const {
     addHistoryEvent,
     addScoreChange,
+    addScoreSet,
     deleteHistoryEntries,
     historyEntries,
   } = useHistoryEntries();
   const [selectedSortType, setSelectedSortType] = useState<SortType>(
     sortTypes[0]
   );
+  const [scoreToSet, setScoreToSet] = useState<number | undefined>(10);
 
   const isNewPlayerNameValid = (newPlayerName: string) => {
     return players.every(
@@ -107,8 +111,17 @@ function Scoreboard() {
 
   const handleResetScores = () => {
     if (players.some((p) => p.score !== 0)) {
-      resetPlayersScore();
+      setScoreForAllPlayers(0);
       addHistoryEvent('Scores reset!');
+    }
+  };
+
+  const handleSetForAllPlayersClick = () => {
+    if (scoreToSet) {
+      setScoreForAllPlayers(scoreToSet);
+      players.forEach((p) => {
+        addScoreSet(scoreToSet, p);
+      });
     }
   };
 
@@ -174,8 +187,7 @@ function Scoreboard() {
                   icon={<FaMinus />}
                   aria-label="decrease score"
                   onClick={() => handleAddScore(player, -1)}
-                  size="sm"
-                  variant="ghost"
+                  size="lg"
                 />
                 <Text fontSize="4xl" px={6}>
                   {player.score}
@@ -184,8 +196,7 @@ function Scoreboard() {
                   icon={<FaPlus />}
                   aria-label="increase score"
                   onClick={() => handleAddScore(player, 1)}
-                  size="sm"
-                  variant="ghost"
+                  size="lg"
                 />
               </HStack>
             </CardBody>
@@ -197,6 +208,30 @@ function Scoreboard() {
         onAddPlayer={handleAddPlayer}
         isNewPlayerNameValid={isNewPlayerNameValid}
       />
+
+      <Box mt={4}>
+        <HStack width="fit-content">
+          <NumberEditor
+            hideCopyButton
+            label="Set score for all players:"
+            onChange={(valueAsString, valueAsNumber) => {
+              if (Number.isNaN(valueAsNumber)) {
+                setScoreToSet(undefined);
+              } else {
+                setScoreToSet(valueAsNumber);
+              }
+            }}
+            value={scoreToSet || ''}
+            w={24}
+          />
+          <Button
+            isDisabled={scoreToSet === undefined}
+            onClick={handleSetForAllPlayersClick}
+          >
+            Set
+          </Button>
+        </HStack>
+      </Box>
 
       <History
         deleteHistory={deleteHistoryEntries}

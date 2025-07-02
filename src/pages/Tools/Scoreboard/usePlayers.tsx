@@ -14,15 +14,6 @@ function usePlayers() {
     ]);
   };
 
-  const resetPlayersScore = () => {
-    setPlayers(
-      players.map((p) => ({
-        ...p,
-        score: 0,
-      }))
-    );
-  };
-
   const removePlayer = (player: Player) => {
     setPlayers(players.filter((p) => p.name !== player.name));
   };
@@ -37,13 +28,22 @@ function usePlayers() {
     setPlayers(updatedPlayers);
   };
 
+  const setScoreForAllPlayers = (newScore: number) => {
+    setPlayers(
+      players.map((p) => ({
+        ...p,
+        score: newScore,
+      }))
+    );
+  };
+
   return {
     addPlayer,
     addScoreToPlayer,
     players,
-    resetPlayersScore,
     removePlayer,
     setPlayers,
+    setScoreForAllPlayers,
   };
 }
 

@@ -15,6 +15,12 @@ export type ScoreChange = {
   previousScore: number;
 } & HistoryEntry;
 
+export type ScoreSet = {
+  newScore: number;
+  playerName: Player['name'];
+  previousScore: number;
+} & HistoryEntry;
+
 export type HistoryEvent = {
   message: string;
 } & HistoryEntry;
@@ -23,6 +29,16 @@ export function isScoreChange(
   historyEntry: HistoryEntry
 ): historyEntry is ScoreChange {
   return (historyEntry as any)?.playerName && (historyEntry as any)?.addedScore;
+}
+
+export function isScoreSet(
+  historyEntry: HistoryEntry
+): historyEntry is ScoreChange {
+  return (
+    (historyEntry as any)?.playerName &&
+    (historyEntry as any)?.newScore &&
+    !(historyEntry as any)?.addedScore
+  );
 }
 
 export function isHistoryEvent(
