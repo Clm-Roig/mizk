@@ -7,7 +7,6 @@ import {
   useToast,
   VStack,
 } from '@chakra-ui/react';
-import parse from 'parse-duration';
 import React, { useEffect, useState } from 'react';
 import Textarea from '../../../../components/Textarea';
 
@@ -15,12 +14,6 @@ import computeDurationToString from './computeDurationToString';
 import OperationButtons from './OperationButtons';
 import Tooltip from './Tooltip';
 import SupportedOperations from './types';
-// Configure duration parsing to allow only h, m, s
-delete parse.yr;
-delete parse.y;
-delete parse.w;
-delete parse.wk;
-delete parse.d;
 
 function DurationCalculator() {
   const toast = useToast();

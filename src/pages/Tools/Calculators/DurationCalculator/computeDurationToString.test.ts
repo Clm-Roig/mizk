@@ -37,16 +37,16 @@ describe('computeDurationToString function', () => {
     const results = [];
 
     results.push({
-      ...computeDurationToString('4h - 2h + 25m + 120s + 3s'),
+      ...computeDurationToString('4h - 2h + 25m + 120s+ 3s'),
       expected: '2h 27m 3s',
     });
     results.push({
-      ...computeDurationToString('1day + 10h - 120s'),
+      ...computeDurationToString('1day +10h - 120s'),
       expected: '33h 58m',
     });
     results.push({
-      ...computeDurationToString('3 + 50 - 3'),
-      expected: '50ms',
+      ...computeDurationToString('3+50-3'),
+      expected: '50s',
     });
 
     results.forEach((res) => {

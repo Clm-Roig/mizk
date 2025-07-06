@@ -5,8 +5,8 @@ const OPERATORS = ['+', '-'];
 const isAnOperator = (value: unknown) =>
   typeof value === 'string' && OPERATORS.includes(value);
 
-const msToTime = (ms: number) => {
-  const time = new Date(ms);
+const secondsToTime = (s: number) => {
+  const time = new Date(s * 1000);
   const hours = Math.floor((time.getTime() - new Date(0).getTime()) / 3600000);
   const minutes = time.getUTCMinutes();
   const seconds = time.getUTCSeconds();
@@ -27,17 +27,34 @@ type Result = {
 
 const computeDurationToString = (value: string): Result => {
   let error = '';
-  let resultInMs = 0;
+  let resultInSeconds = 0;
   const splittedValues = value
     .trim()
-    .split(' ')
-    .filter((x) => x !== '');
+    .split('')
+    .filter((x) => x !== '')
+    .reduce<string[]>((result, currentValue) => {
+      const previousValue = result[result.length - 1];
+
+      // Agregate two consecutives numbers (35 => ["3", "5"] => ["35"])
+      if (
+        !isAnOperator(currentValue) &&
+        previousValue &&
+        !isAnOperator(previousValue)
+      ) {
+        return [
+          ...result.slice(0, result.length - 1),
+          previousValue + currentValue,
+        ];
+      }
+
+      return [...result, currentValue];
+    }, []);
   let previousValue: unknown;
   const parsedValues = splittedValues.map((v: string) => {
     let result: unknown = v;
     if (!isAnOperator(v)) {
       // Convert everything in milliseconds
-      result = parse(v);
+      result = parse(v, 's');
       if (result === null) {
         error = `The value ${v} can not be parsed.`;
       }
@@ -61,22 +78,22 @@ const computeDurationToString = (value: string): Result => {
       if (isAnOperator(previousValue)) {
         switch (previousValue) {
           case '+':
-            resultInMs += parsedValue;
+            resultInSeconds += parsedValue;
             break;
           case '-':
-            resultInMs -= parsedValue;
+            resultInSeconds -= parsedValue;
             break;
           default:
             break;
         }
       } else {
-        resultInMs += parsedValue;
+        resultInSeconds += parsedValue;
       }
     }
     previousValue = parsedValue;
   });
 
-  return { result: msToTime(resultInMs), error };
+  return { result: secondsToTime(resultInSeconds), error };
 };
 
 export default computeDurationToString;
