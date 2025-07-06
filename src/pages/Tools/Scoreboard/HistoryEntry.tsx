@@ -56,10 +56,8 @@ function HistoryEntry({ historyEntry }: Props) {
       <HStack>
         <HStack>
           <Text>
-            <b>
-              {playerName}
-              {`'s`}
-            </b>{' '}
+            <b>{playerName}</b>
+            {`'s `}
             score set to {newScore} point{plural} ({previousScore}
           </Text>
           <Icon as={FaArrowRight} boxSize={2.5} />
