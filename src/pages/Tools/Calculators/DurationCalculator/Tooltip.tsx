@@ -10,8 +10,8 @@ function Tooltip() {
   return (
     <ChakraTooltip
       label={
-        <UnorderedList>
-          <ListItem>
+        <UnorderedList styleType="circle">
+          <ListItem mb={2}>
             You can use various units:
             <UnorderedList>
               <ListItem>days (24h) ➡ day / days</ListItem>
@@ -20,14 +20,16 @@ function Tooltip() {
               <ListItem>seconds ➡ s / sec / second / seconds</ListItem>
             </UnorderedList>
           </ListItem>
-          <ListItem>Input example: 3days + 2h - 25min + 1day + 20sec</ListItem>
-          <ListItem>
+          <ListItem mb={2}>
+            Input example: 3days + 2h - 25min + 1day + 20sec
+          </ListItem>
+          <ListItem mb={2}>
             Spaces and line breaks are ignored: feel free to format your
             calculation as you want!
           </ListItem>
-          <ListItem>
-            If you don&apos;t provide any unit, values are treated as
-            milliseconds (ex: 3 + 5 = 8ms).
+          <ListItem mb={2}>
+            If you don&apos;t provide any unit, values are treated as seconds
+            (ex: 3 + 5 = 8s).
           </ListItem>
         </UnorderedList>
       }
