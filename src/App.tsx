@@ -32,6 +32,7 @@ import ListSorter from './pages/Tools/Text/ListSorter';
 import WhatsMyIp from './pages/Tools/WhatsMyIp';
 import DomainTools from './pages/Tools/DomainTools';
 import Scoreboard from './pages/Tools/Scoreboard';
+import RandomnessGenerator from './pages/Tools/RandomnessGenerator';
 
 function CustomRouter({ children }: { children: ReactNode }) {
   return process.env.NODE_ENV === 'test' ? (
@@ -106,6 +107,10 @@ function App() {
             {/* ===== Game tools ===== */}
             <Route path={GAME.url} element={<GameTools />} />
             <Route path={`${GAME.url}/scoreboard`} element={<Scoreboard />} />
+            <Route
+              path={`${GAME.url}/randomness-generator`}
+              element={<RandomnessGenerator />}
+            />
 
             <Route path="*" element={<NotFound />} />
           </Routes>

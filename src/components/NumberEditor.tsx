@@ -23,12 +23,17 @@ function NumberEditor({
   hideCopyButton,
   ...numberInputProps
 }: Props) {
+  const { value } = numberInputProps;
   return (
     <FormControl display="flex" alignItems="center">
       <FormLabel marginY={0} {...formLabelProps}>
         {label}
       </FormLabel>
-      <NumberInput {...numberInputProps} allowMouseWheel>
+      <NumberInput
+        {...numberInputProps}
+        allowMouseWheel
+        value={Number.isNaN(value) ? '' : value}
+      >
         <NumberInputField />
         <NumberInputStepper>
           <NumberIncrementStepper />

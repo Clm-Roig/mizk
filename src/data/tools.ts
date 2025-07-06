@@ -133,6 +133,14 @@ const tools: Array<Tool> = [
     type: GAME,
     url: `${GAME.url}/scoreboard`,
   },
+  {
+    description: 'Generate random numbers.',
+    keywords: ['random', 'dice', 'choices'],
+    menuName: 'Randomness generator',
+    name: 'Randomness generator',
+    type: GAME,
+    url: `${GAME.url}/randomness-generator`,
+  },
 ];
 
 export default tools;
