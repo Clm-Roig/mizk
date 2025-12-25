@@ -11,6 +11,7 @@ import {
   Text,
   useTheme,
 } from '@chakra-ui/react';
+import { v4 as uuidv4 } from 'uuid';
 import {
   FaMinus,
   FaPlus,
@@ -23,7 +24,7 @@ import {
 } from 'react-icons/fa';
 import stringToColor from './stringToColor';
 import MCard from '../../../components/MCard';
-import { Player } from './types';
+import { Player, ScoreChange } from './types';
 import SortMenu, { SortType } from '../../../components/SortMenu';
 import History from './History';
 import NewPlayerForm from './NewPlayerForm';
@@ -65,11 +66,7 @@ function Scoreboard() {
     colors: { red },
   } = useTheme();
   const [pendingScoreChanges, setPendingScoreChanges] = useState<
-    Array<{
-      playerName: Player['name'];
-      previousScore: Player['score'];
-      addedScore: number;
-    }>
+    Array<ScoreChange>
   >([]);
   const debouncedScoreChanges = useDebounce(pendingScoreChanges, 1000);
   const {
@@ -109,9 +106,12 @@ function Scoreboard() {
     setPendingScoreChanges((prev) => [
       ...prev,
       {
-        playerName: toUpdatePlayer.name,
-        previousScore: toUpdatePlayer.score,
         addedScore,
+        date: new Date(),
+        id: uuidv4(),
+        newScore: toUpdatePlayer.score + addedScore,
+        player: toUpdatePlayer,
+        previousScore: toUpdatePlayer.score,
       },
     ]);
   };
@@ -137,10 +137,13 @@ function Scoreboard() {
   const handleSetForAllPlayersClick = () => {
     if (scoreToSet) {
       setScoreForAllPlayers(scoreToSet);
+      const date = new Date();
       players.forEach((p) => {
         addScoreSet({
+          date,
+          id: uuidv4(),
           newScore: scoreToSet,
-          playerName: p.name,
+          player: p,
           previousScore: p.score,
         });
       });
@@ -149,17 +152,37 @@ function Scoreboard() {
 
   // Apply debounced score changes to the history
   useEffect(() => {
-    if (debouncedScoreChanges) {
-      Object.entries(debouncedScoreChanges).forEach(
-        ([playerName, scoreChange]) => {
-          if (scoreChange.addedScore !== 0) {
-            const player = players.find((p) => p.name === playerName);
-            if (player) {
-              addScoreChange(scoreChange);
-            }
+    if (debouncedScoreChanges?.length > 0) {
+      const aggScoreChanges = debouncedScoreChanges.reduce(
+        (result: ScoreChange[], currScoreChange) => {
+          const playerScoreChangeIdx = result.findIndex(
+            (sc) => sc.player.name === currScoreChange.player.name
+          );
+          if (playerScoreChangeIdx === -1) {
+            return [...result, currScoreChange];
           }
-        }
+          const playerScoreChange = result[playerScoreChangeIdx];
+          return [
+            ...result.filter(
+              (sc) => sc.player.name !== playerScoreChange.player.name
+            ),
+            {
+              ...playerScoreChange,
+              id: uuidv4(),
+              addedScore:
+                playerScoreChange.addedScore + currScoreChange.addedScore,
+              newScore: playerScoreChange.newScore + currScoreChange.addedScore,
+            },
+          ];
+        },
+        []
       );
+
+      const date = new Date(); // set same date for all changes
+      aggScoreChanges
+        .map((sc) => ({ ...sc, date }))
+        .forEach((sc) => addScoreChange(sc));
+
       if (Object.keys(debouncedScoreChanges).length > 0) {
         setPendingScoreChanges([]);
       }

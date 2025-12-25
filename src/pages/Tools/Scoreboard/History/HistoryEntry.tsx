@@ -6,8 +6,8 @@ import {
   isScoreChange,
   isHistoryEvent,
   isScoreSet,
-} from './types';
-import { formatTimeToHHMMSS } from '../../../components/ToolSearchBar/utils';
+} from '../types';
+import { formatTimeToHHMMSS } from '../../../../components/ToolSearchBar/utils';
 
 type Props = {
   historyEntry: HistoryEntryType;
@@ -26,8 +26,13 @@ function DateComponent({ date }: { date: Date }) {
 
 function HistoryEntry({ historyEntry }: Props) {
   if (isScoreChange(historyEntry)) {
-    const { addedScore, date, newScore, playerName, previousScore } =
-      historyEntry;
+    const {
+      addedScore,
+      date,
+      newScore,
+      player: { name },
+      previousScore,
+    } = historyEntry;
     const sign = addedScore > 0 ? '+' : '';
     const plural = Math.abs(addedScore) > 1 && 's';
     return (
@@ -40,7 +45,7 @@ function HistoryEntry({ historyEntry }: Props) {
             </b>{' '}
           </Text>
           <Text>
-            point{plural} to <b>{playerName}</b> ({previousScore}{' '}
+            point{plural} to <b>{name}</b> ({previousScore}{' '}
           </Text>
           <Icon as={FaArrowRight} boxSize={2.5} />
           <Text>{newScore})</Text>
@@ -50,13 +55,18 @@ function HistoryEntry({ historyEntry }: Props) {
     );
   }
   if (isScoreSet(historyEntry)) {
-    const { date, newScore, playerName, previousScore } = historyEntry;
+    const {
+      date,
+      newScore,
+      player: { name },
+      previousScore,
+    } = historyEntry;
     const plural = Math.abs(newScore) > 1 && 's';
     return (
       <HStack>
         <HStack>
           <Text>
-            <b>{playerName}</b>
+            <b>{name}</b>
             {`'s `}
             score set to {newScore} point{plural} ({previousScore}
           </Text>

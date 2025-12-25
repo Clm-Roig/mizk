@@ -1,16 +1,21 @@
 import { useState } from 'react';
 import { Player } from './types';
+import stringToColor from './stringToColor';
 
 function usePlayers() {
   const [players, setPlayers] = useState<Player[]>([
-    { name: 'Alice', score: 0 },
-    { name: 'John', score: 0 },
+    { color: stringToColor('Camille'), name: 'Camille', score: 0 },
+    { color: stringToColor('Morgan'), name: 'Morgan', score: 0 },
   ]);
 
   const addPlayer = (newPlayerName: string) => {
     setPlayers((previousPlayers) => [
       ...previousPlayers,
-      { name: newPlayerName.trim(), score: 0 },
+      {
+        color: stringToColor(newPlayerName.trim()),
+        name: newPlayerName.trim(),
+        score: 0,
+      },
     ]);
   };
 

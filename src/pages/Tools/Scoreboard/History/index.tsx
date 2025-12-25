@@ -12,8 +12,9 @@ import {
   useTheme,
 } from '@chakra-ui/react';
 import { FaTrash } from 'react-icons/fa';
-import { HistoryEntry as HistoryEntryType } from './types';
+import { HistoryEntry as HistoryEntryType } from '../types';
 import HistoryEntry from './HistoryEntry';
+import HistoryChart from './HistoryChart';
 
 type Props = {
   deleteHistory: () => void;
@@ -24,6 +25,7 @@ function History({ deleteHistory, historyEntries }: Props) {
   const {
     colors: { red },
   } = useTheme();
+
   return (
     <>
       <HStack justifyContent="space-between">
@@ -39,8 +41,9 @@ function History({ deleteHistory, historyEntries }: Props) {
           Delete history
         </Button>
       </HStack>
+
       {historyEntries?.length > 0 && (
-        <Accordion allowToggle>
+        <Accordion allowToggle defaultIndex={[0]}>
           <AccordionItem>
             {({ isExpanded }) => (
               <>
@@ -51,6 +54,8 @@ function History({ deleteHistory, historyEntries }: Props) {
                   <AccordionIcon />
                 </AccordionButton>
                 <AccordionPanel>
+                  <HistoryChart historyEntries={historyEntries} />
+
                   {historyEntries.map((historyEntry) => (
                     <span key={historyEntry.id}>
                       <HistoryEntry historyEntry={historyEntry} />

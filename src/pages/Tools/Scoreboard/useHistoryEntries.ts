@@ -1,58 +1,22 @@
 import { useCallback, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { HistoryEntry, Player } from './types';
+import { HistoryEntry, ScoreChange, ScoreSet } from './types';
 
 function useHistoryEntries() {
   const [historyEntries, setHistoryEntries] = useState<HistoryEntry[]>([]);
+  const addScoreChange = useCallback((scoreChange: ScoreChange) => {
+    setHistoryEntries((prevHistoryEntries) => [
+      scoreChange,
+      ...prevHistoryEntries,
+    ]);
+  }, []);
 
-  const addScoreChange = useCallback(
-    ({
-      addedScore,
-      playerName,
-      previousScore,
-    }: {
-      addedScore: number;
-      playerName: Player['name'];
-      previousScore: Player['score'];
-    }) => {
-      setHistoryEntries((prevHistoryEntries) => [
-        {
-          addedScore,
-          date: new Date(),
-          id: uuidv4(),
-          playerName,
-          previousScore,
-          newScore: previousScore + addedScore,
-        },
-        ...prevHistoryEntries,
-      ]);
-    },
-    []
-  );
-
-  const addScoreSet = useCallback(
-    ({
-      newScore,
-      playerName,
-      previousScore,
-    }: {
-      newScore: number;
-      playerName: Player['name'];
-      previousScore: Player['score'];
-    }) => {
-      setHistoryEntries((prevHistoryEntries) => [
-        {
-          date: new Date(),
-          id: uuidv4(),
-          playerName,
-          previousScore,
-          newScore,
-        },
-        ...prevHistoryEntries,
-      ]);
-    },
-    []
-  );
+  const addScoreSet = useCallback((scoreSet: ScoreSet) => {
+    setHistoryEntries((prevHistoryEntries) => [
+      scoreSet,
+      ...prevHistoryEntries,
+    ]);
+  }, []);
 
   const addHistoryEvent = useCallback((message: string) => {
     setHistoryEntries((prevHistoryEntries) => [

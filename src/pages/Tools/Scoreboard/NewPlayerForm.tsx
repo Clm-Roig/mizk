@@ -19,8 +19,10 @@ function NewPlayerForm({ isNewPlayerNameValid, onAddPlayer }: Props) {
 
   const handleOnSubmit = (event: FormEvent) => {
     event.preventDefault();
-    onAddPlayer(newPlayerName);
-    setNewPlayerName('');
+    if (isNewPlayerNameValid(newPlayerName)) {
+      onAddPlayer(newPlayerName);
+      setNewPlayerName('');
+    }
   };
 
   return (
