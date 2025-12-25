@@ -6,15 +6,23 @@ function useHistoryEntries() {
   const [historyEntries, setHistoryEntries] = useState<HistoryEntry[]>([]);
 
   const addScoreChange = useCallback(
-    (addedScore: number, toUpdatePlayer: Player) => {
+    ({
+      addedScore,
+      playerName,
+      previousScore,
+    }: {
+      addedScore: number;
+      playerName: Player['name'];
+      previousScore: Player['score'];
+    }) => {
       setHistoryEntries((prevHistoryEntries) => [
         {
           addedScore,
           date: new Date(),
           id: uuidv4(),
-          playerName: toUpdatePlayer.name,
-          previousScore: toUpdatePlayer.score,
-          newScore: toUpdatePlayer.score + addedScore,
+          playerName,
+          previousScore,
+          newScore: previousScore + addedScore,
         },
         ...prevHistoryEntries,
       ]);
@@ -23,13 +31,21 @@ function useHistoryEntries() {
   );
 
   const addScoreSet = useCallback(
-    (newScore: number, toUpdatePlayer: Player) => {
+    ({
+      newScore,
+      playerName,
+      previousScore,
+    }: {
+      newScore: number;
+      playerName: Player['name'];
+      previousScore: Player['score'];
+    }) => {
       setHistoryEntries((prevHistoryEntries) => [
         {
           date: new Date(),
           id: uuidv4(),
-          playerName: toUpdatePlayer.name,
-          previousScore: toUpdatePlayer.score,
+          playerName,
+          previousScore,
           newScore,
         },
         ...prevHistoryEntries,

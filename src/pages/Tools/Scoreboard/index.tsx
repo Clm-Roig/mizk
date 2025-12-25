@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   Box,
   Button,
@@ -30,6 +30,7 @@ import NewPlayerForm from './NewPlayerForm';
 import useHistoryEntries from './useHistoryEntries';
 import usePlayers from './usePlayers';
 import NumberEditor from '../../../components/NumberEditor';
+import useDebounce from '../../../hooks/useDebounce';
 
 const ALPHABETICAL_DOWN_SORT = 'ALPHABETICAL_DOWN_SORT';
 const ALPHABETICAL_UP_SORT = 'ALPHABETICAL_UP_SORT';
@@ -63,6 +64,14 @@ function Scoreboard() {
   const {
     colors: { red },
   } = useTheme();
+  const [pendingScoreChanges, setPendingScoreChanges] = useState<
+    Array<{
+      playerName: Player['name'];
+      previousScore: Player['score'];
+      addedScore: number;
+    }>
+  >([]);
+  const debouncedScoreChanges = useDebounce(pendingScoreChanges, 1000);
   const {
     addPlayer,
     addScoreToPlayer,
@@ -94,8 +103,17 @@ function Scoreboard() {
   };
 
   const handleAddScore = (toUpdatePlayer: Player, addedScore: number) => {
+    // Immediately add score to player
     addScoreToPlayer(toUpdatePlayer, addedScore);
-    addScoreChange(addedScore, toUpdatePlayer);
+    // Wait for debouncing before adding to the history
+    setPendingScoreChanges((prev) => [
+      ...prev,
+      {
+        playerName: toUpdatePlayer.name,
+        previousScore: toUpdatePlayer.score,
+        addedScore,
+      },
+    ]);
   };
 
   const handleRemove = (player: Player) => {
@@ -120,10 +138,33 @@ function Scoreboard() {
     if (scoreToSet) {
       setScoreForAllPlayers(scoreToSet);
       players.forEach((p) => {
-        addScoreSet(scoreToSet, p);
+        addScoreSet({
+          newScore: scoreToSet,
+          playerName: p.name,
+          previousScore: p.score,
+        });
       });
     }
   };
+
+  // Apply debounced score changes to the history
+  useEffect(() => {
+    if (debouncedScoreChanges) {
+      Object.entries(debouncedScoreChanges).forEach(
+        ([playerName, scoreChange]) => {
+          if (scoreChange.addedScore !== 0) {
+            const player = players.find((p) => p.name === playerName);
+            if (player) {
+              addScoreChange(scoreChange);
+            }
+          }
+        }
+      );
+      if (Object.keys(debouncedScoreChanges).length > 0) {
+        setPendingScoreChanges([]);
+      }
+    }
+  }, [addScoreChange, debouncedScoreChanges, players]);
 
   const sortedPlayers = useMemo(() => {
     switch (selectedSortType.id) {
