@@ -1,10 +1,10 @@
 const minBrightness = 82; // Adjust this value to control brightness
 
-function stringToColor(str: string): string {
+function getStringToColor(str: string): string {
   let hash = 0;
   for (let i = 0; i < str.length; i += 1) {
     // eslint-disable-next-line no-bitwise
-    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    hash = str.charCodeAt(i) + ((hash << 2) - hash);
   }
 
   // Ensure that the generated color is bright (light)
@@ -14,4 +14,4 @@ function stringToColor(str: string): string {
   return color;
 }
 
-export default stringToColor;
+export default getStringToColor;

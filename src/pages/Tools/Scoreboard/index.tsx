@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
-  Box,
   Button,
   CardBody,
   CardHeader,
+  Flex,
+  FormLabel,
   HStack,
   Heading,
   IconButton,
@@ -22,7 +23,7 @@ import {
   FaSortNumericUp,
   FaUndo,
 } from 'react-icons/fa';
-import stringToColor from './stringToColor';
+import getStringToColor from './getStringToColor';
 import MCard from '../../../components/MCard';
 import { Player, ScoreChange } from './types';
 import SortMenu, { SortType } from '../../../components/SortMenu';
@@ -86,7 +87,7 @@ function Scoreboard() {
   const [selectedSortType, setSelectedSortType] = useState<SortType>(
     sortTypes[0]
   );
-  const [scoreToSet, setScoreToSet] = useState<number | undefined>(10);
+  const [scoreToSet, setScoreToSet] = useState<number | string | undefined>(10);
 
   const isNewPlayerNameValid = (newPlayerName: string) => {
     return players.every(
@@ -135,14 +136,16 @@ function Scoreboard() {
   };
 
   const handleSetForAllPlayersClick = () => {
-    if (scoreToSet) {
-      setScoreForAllPlayers(scoreToSet);
+    const n = Number(scoreToSet);
+    const scoreNumber = Number.isNaN(n) ? null : Number(scoreToSet);
+    if (scoreToSet !== '' && scoreNumber !== null) {
+      setScoreForAllPlayers(scoreNumber);
       const date = new Date();
       players.forEach((p) => {
         addScoreSet({
           date,
           id: uuidv4(),
-          newScore: scoreToSet,
+          newScore: scoreNumber,
           player: p,
           previousScore: p.score,
         });
@@ -229,7 +232,7 @@ function Scoreboard() {
         {sortedPlayers.map((player) => (
           <MCard
             key={player.name}
-            backgroundColor={stringToColor(player.name)}
+            backgroundColor={getStringToColor(player.name)}
             align="center"
           >
             <CardHeader>
@@ -268,34 +271,44 @@ function Scoreboard() {
         ))}
       </SimpleGrid>
 
-      <NewPlayerForm
-        onAddPlayer={handleAddPlayer}
-        isNewPlayerNameValid={isNewPlayerNameValid}
-      />
-
-      <Box mt={4}>
-        <HStack width="fit-content">
-          <NumberEditor
-            hideCopyButton
-            label="Set score for all players:"
-            onChange={(valueAsString, valueAsNumber) => {
-              if (Number.isNaN(valueAsNumber)) {
-                setScoreToSet(undefined);
-              } else {
-                setScoreToSet(valueAsNumber);
-              }
-            }}
-            value={scoreToSet || ''}
-            w={24}
+      <Flex gap={4} flexDir={{ base: 'column', md: 'row' }}>
+        <Flex flex={1}>
+          <NewPlayerForm
+            onAddPlayer={handleAddPlayer}
+            isNewPlayerNameValid={isNewPlayerNameValid}
           />
-          <Button
-            isDisabled={scoreToSet === undefined}
-            onClick={handleSetForAllPlayersClick}
-          >
-            Set
-          </Button>
-        </HStack>
-      </Box>
+        </Flex>
+        <Flex flex={1} flexDir="column">
+          <form onSubmit={handleSetForAllPlayersClick}>
+            <FormLabel>Set score for all players</FormLabel>
+            <HStack width="fit-content">
+              <NumberEditor
+                hideCopyButton
+                inputMode="numeric"
+                onChange={(valueAsString) => {
+                  const integerOnly = valueAsString
+                    .replace(/[^0-9-]/g, '') // numbers only
+                    .replace(/(?!^)-/g, ''); // negative sign at the beginning allowed
+                  setScoreToSet(integerOnly);
+                }}
+                value={scoreToSet === 0 ? 0 : scoreToSet ?? ''}
+                w={24}
+              />
+              <Button
+                isDisabled={
+                  scoreToSet === undefined ||
+                  scoreToSet === null ||
+                  scoreToSet === ''
+                }
+                onClick={handleSetForAllPlayersClick}
+                type="submit"
+              >
+                Set
+              </Button>
+            </HStack>
+          </form>
+        </Flex>
+      </Flex>
 
       <History
         deleteHistory={deleteHistoryEntries}

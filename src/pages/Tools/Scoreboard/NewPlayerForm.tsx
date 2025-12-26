@@ -4,7 +4,7 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  HStack,
+  Stack,
   Input,
 } from '@chakra-ui/react';
 import { FaPlus } from 'react-icons/fa';
@@ -26,11 +26,12 @@ function NewPlayerForm({ isNewPlayerNameValid, onAddPlayer }: Props) {
   };
 
   return (
-    <form onSubmit={handleOnSubmit}>
+    <form onSubmit={handleOnSubmit} style={{ width: '100%' }}>
       <FormControl isInvalid={!isNewPlayerNameValid(newPlayerName)}>
         <FormLabel>New player name</FormLabel>
-        <HStack>
+        <Stack direction={{ base: 'column', sm: 'row' }}>
           <Input
+            flex={{ base: 'none', sm: 2 }}
             isInvalid={!isNewPlayerNameValid(newPlayerName)}
             onChange={(e: FormEvent<HTMLInputElement>) =>
               setNewPlayerName(e.currentTarget.value)
@@ -40,11 +41,15 @@ function NewPlayerForm({ isNewPlayerNameValid, onAddPlayer }: Props) {
           />
 
           {isNewPlayerNameValid(newPlayerName) && newPlayerName.trim() && (
-            <Button type="submit" leftIcon={<FaPlus />}>
+            <Button
+              flex={{ base: 'none', sm: 1 }}
+              type="submit"
+              leftIcon={<FaPlus />}
+            >
               Add player
             </Button>
           )}
-        </HStack>
+        </Stack>
         {!isNewPlayerNameValid(newPlayerName) && (
           <FormErrorMessage>
             A player with this name already exists.

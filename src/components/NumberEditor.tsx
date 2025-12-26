@@ -13,7 +13,7 @@ import {
 import CopyButton from './CopyButton';
 
 interface Props extends NumberInputProps {
-  label: string;
+  label?: string;
   formLabelProps?: FormLabelProps;
   hideCopyButton?: boolean;
 }
@@ -26,9 +26,11 @@ function NumberEditor({
   const { value } = numberInputProps;
   return (
     <FormControl display="flex" alignItems="center">
-      <FormLabel marginY={0} {...formLabelProps}>
-        {label}
-      </FormLabel>
+      {label && (
+        <FormLabel marginY={0} {...formLabelProps}>
+          {label}
+        </FormLabel>
+      )}
       <NumberInput
         {...numberInputProps}
         allowMouseWheel
