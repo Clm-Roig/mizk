@@ -1,19 +1,13 @@
 import { useCallback, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { HistoryEntry, ScoreChange, ScoreSet } from './types';
+import { HistoryEntry, ScoreEntry } from './types';
 
 function useHistoryEntries() {
   const [historyEntries, setHistoryEntries] = useState<HistoryEntry[]>([]);
-  const addScoreChange = useCallback((scoreChange: ScoreChange) => {
-    setHistoryEntries((prevHistoryEntries) => [
-      scoreChange,
-      ...prevHistoryEntries,
-    ]);
-  }, []);
 
-  const addScoreSet = useCallback((scoreSet: ScoreSet) => {
+  const addScoreEntry = useCallback((scoreEntry: ScoreEntry) => {
     setHistoryEntries((prevHistoryEntries) => [
-      scoreSet,
+      scoreEntry,
       ...prevHistoryEntries,
     ]);
   }, []);
@@ -35,8 +29,7 @@ function useHistoryEntries() {
 
   return {
     addHistoryEvent,
-    addScoreChange,
-    addScoreSet,
+    addScoreEntry,
     deleteHistoryEntries,
     historyEntries,
     setHistoryEntries,

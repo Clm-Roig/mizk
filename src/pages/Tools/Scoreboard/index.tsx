@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { FormEvent, useEffect, useMemo, useState } from 'react';
 import {
   Button,
   CardBody,
@@ -25,7 +25,15 @@ import {
 } from 'react-icons/fa';
 import getStringToColor from './getStringToColor';
 import MCard from '../../../components/MCard';
-import { Player, ScoreChange } from './types';
+import {
+  isAScoreChange,
+  isAScoreEntry,
+  isAScoreSet,
+  Player,
+  ScoreChange,
+  ScoreEntry,
+  ScoreSet,
+} from './types';
 import SortMenu, { SortType } from '../../../components/SortMenu';
 import History from './History';
 import NewPlayerForm from './NewPlayerForm';
@@ -66,10 +74,10 @@ function Scoreboard() {
   const {
     colors: { red },
   } = useTheme();
-  const [pendingScoreChanges, setPendingScoreChanges] = useState<
-    Array<ScoreChange>
+  const [pendingHistoryEntries, setPendingHistoryEntries] = useState<
+    Array<ScoreEntry>
   >([]);
-  const debouncedScoreChanges = useDebounce(pendingScoreChanges, 1000);
+  const debouncedHistoryEntries = useDebounce(pendingHistoryEntries, 1000);
   const {
     addPlayer,
     addScoreToPlayer,
@@ -79,8 +87,7 @@ function Scoreboard() {
   } = usePlayers();
   const {
     addHistoryEvent,
-    addScoreChange,
-    addScoreSet,
+    addScoreEntry,
     deleteHistoryEntries,
     historyEntries,
   } = useHistoryEntries();
@@ -101,20 +108,19 @@ function Scoreboard() {
   };
 
   const handleAddScore = (toUpdatePlayer: Player, addedScore: number) => {
-    // Immediately add score to player
-    addScoreToPlayer(toUpdatePlayer, addedScore);
     // Wait for debouncing before adding to the history
-    setPendingScoreChanges((prev) => [
+    setPendingHistoryEntries((prev) => [
       ...prev,
       {
         addedScore,
         date: new Date(),
         id: uuidv4(),
-        newScore: toUpdatePlayer.score + addedScore,
-        player: toUpdatePlayer,
+        player: { ...toUpdatePlayer },
         previousScore: toUpdatePlayer.score,
       },
     ]);
+    // Immediately add score to player
+    addScoreToPlayer(toUpdatePlayer, addedScore);
   };
 
   const handleRemove = (player: Player) => {
@@ -135,62 +141,99 @@ function Scoreboard() {
     }
   };
 
-  const handleSetForAllPlayersClick = () => {
+  const handleSetForAllPlayersClick = (e: FormEvent) => {
+    e.preventDefault();
     const n = Number(scoreToSet);
     const scoreNumber = Number.isNaN(n) ? null : Number(scoreToSet);
     if (scoreToSet !== '' && scoreNumber !== null) {
-      setScoreForAllPlayers(scoreNumber);
       const date = new Date();
       players.forEach((p) => {
-        addScoreSet({
-          date,
-          id: uuidv4(),
-          newScore: scoreNumber,
-          player: p,
-          previousScore: p.score,
-        });
+        setPendingHistoryEntries((prev) => [
+          ...prev,
+          {
+            date,
+            id: uuidv4(),
+            newScore: scoreNumber,
+            player: p,
+            previousScore: p.score,
+          },
+        ]);
       });
+      setScoreForAllPlayers(scoreNumber);
     }
   };
 
   // Apply debounced score changes to the history
   useEffect(() => {
-    if (debouncedScoreChanges?.length > 0) {
-      const aggScoreChanges = debouncedScoreChanges.reduce(
-        (result: ScoreChange[], currScoreChange) => {
-          const playerScoreChangeIdx = result.findIndex(
-            (sc) => sc.player.name === currScoreChange.player.name
+    if (debouncedHistoryEntries?.length > 0) {
+      const aggScoreEntries = [...debouncedHistoryEntries] // to avoid mutation by sort()
+        .sort((sc1, sc2) => sc1.date.getTime() - sc2.date.getTime())
+        .reduce((result: Array<ScoreChange | ScoreSet>, currHistoryEntry) => {
+          const isScoreSet = isAScoreSet(currHistoryEntry);
+          const isScoreChange = isAScoreChange(currHistoryEntry);
+          if (!isAScoreEntry(currHistoryEntry)) return result;
+
+          const historyEntryPlayerIdx = result.findIndex(
+            (he) =>
+              he.player.name === currHistoryEntry.player.name &&
+              ((isScoreSet && isAScoreSet(he)) ||
+                (isScoreChange && isAScoreChange(he)))
           );
-          if (playerScoreChangeIdx === -1) {
-            return [...result, currScoreChange];
+
+          // No score changes / sets for this player: create a new scoreChange / scoreSet
+          if (historyEntryPlayerIdx === -1) {
+            return [...result, currHistoryEntry];
           }
-          const playerScoreChange = result[playerScoreChangeIdx];
-          return [
-            ...result.filter(
-              (sc) => sc.player.name !== playerScoreChange.player.name
-            ),
-            {
-              ...playerScoreChange,
-              id: uuidv4(),
-              addedScore:
-                playerScoreChange.addedScore + currScoreChange.addedScore,
-              newScore: playerScoreChange.newScore + currScoreChange.addedScore,
-            },
-          ];
-        },
-        []
-      );
+
+          // A score set exists for this player: aggregate them.
+          if (isScoreSet) {
+            const playerScoreSet = result[historyEntryPlayerIdx] as ScoreSet;
+            return [
+              ...result.filter((_, idx) => idx !== historyEntryPlayerIdx),
+              {
+                ...playerScoreSet,
+                id: uuidv4(),
+                newScore: currHistoryEntry.newScore,
+                previousScore: playerScoreSet.previousScore,
+              },
+            ];
+          }
+
+          // A score change exists for this player: aggregate them.
+          if (isScoreChange) {
+            const playerScoreChange = result[
+              historyEntryPlayerIdx
+            ] as ScoreChange;
+            return [
+              ...result.filter((_, idx) => idx !== historyEntryPlayerIdx),
+              {
+                ...playerScoreChange,
+                id: uuidv4(),
+                addedScore:
+                  playerScoreChange.addedScore + currHistoryEntry.addedScore,
+                previousScore: playerScoreChange.previousScore,
+              },
+            ];
+          }
+          return result;
+        }, []);
 
       const date = new Date(); // set same date for all changes
-      aggScoreChanges
+      aggScoreEntries
         .map((sc) => ({ ...sc, date }))
-        .forEach((sc) => addScoreChange(sc));
+        .filter(
+          (sc) => isAScoreSet(sc) || (isAScoreChange(sc) && sc.addedScore !== 0)
+        ) // remove empty addedScore (happens when user press +1 then -1)
+        .forEach((sc) => addScoreEntry(sc));
 
-      if (Object.keys(debouncedScoreChanges).length > 0) {
-        setPendingScoreChanges([]);
-      }
+      // Remove treated entries
+      setPendingHistoryEntries((entries) =>
+        entries.filter((entry) =>
+          debouncedHistoryEntries.every((dEntry) => dEntry.id !== entry.id)
+        )
+      );
     }
-  }, [addScoreChange, debouncedScoreChanges, players]);
+  }, [addScoreEntry, debouncedHistoryEntries]);
 
   const sortedPlayers = useMemo(() => {
     switch (selectedSortType.id) {
@@ -254,7 +297,8 @@ function Scoreboard() {
                   icon={<FaMinus />}
                   aria-label="decrease score"
                   onClick={() => handleAddScore(player, -1)}
-                  size="lg"
+                  height={{ base: '48px', md: '72px' }}
+                  width={{ base: '48px', md: '72px' }}
                 />
                 <Text fontSize="4xl" px={6}>
                   {player.score}
@@ -263,7 +307,8 @@ function Scoreboard() {
                   icon={<FaPlus />}
                   aria-label="increase score"
                   onClick={() => handleAddScore(player, 1)}
-                  size="lg"
+                  height={{ base: '48px', md: '72px' }}
+                  width={{ base: '48px', md: '72px' }}
                 />
               </HStack>
             </CardBody>
@@ -300,7 +345,6 @@ function Scoreboard() {
                   scoreToSet === null ||
                   scoreToSet === ''
                 }
-                onClick={handleSetForAllPlayersClick}
                 type="submit"
               >
                 Set

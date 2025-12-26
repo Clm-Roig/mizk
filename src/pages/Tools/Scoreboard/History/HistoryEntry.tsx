@@ -3,9 +3,10 @@ import { FaArrowRight } from 'react-icons/fa';
 import {
   HistoryEntry as HistoryEntryType,
   HistoryEvent,
-  isScoreChange,
+  isAScoreChange,
   isHistoryEvent,
-  isScoreSet,
+  isAScoreSet,
+  getNewScore,
 } from '../types';
 import { formatTimeToHHMMSS } from '../../../../components/ToolSearchBar/utils';
 
@@ -25,16 +26,16 @@ function DateComponent({ date }: { date: Date }) {
 }
 
 function HistoryEntry({ historyEntry }: Props) {
-  if (isScoreChange(historyEntry)) {
+  if (isAScoreChange(historyEntry)) {
     const {
       addedScore,
       date,
-      newScore,
       player: { name },
       previousScore,
     } = historyEntry;
     const sign = addedScore > 0 ? '+' : '';
     const plural = Math.abs(addedScore) > 1 && 's';
+    const newScore = getNewScore(historyEntry);
     return (
       <HStack>
         <HStack>
@@ -54,7 +55,7 @@ function HistoryEntry({ historyEntry }: Props) {
       </HStack>
     );
   }
-  if (isScoreSet(historyEntry)) {
+  if (isAScoreSet(historyEntry)) {
     const {
       date,
       newScore,

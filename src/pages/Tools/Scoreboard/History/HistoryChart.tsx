@@ -9,9 +9,9 @@ import {
   YAxis,
 } from 'recharts';
 import {
+  getNewScore,
   HistoryEntry as HistoryEntryType,
-  isScoreChange,
-  isScoreSet,
+  isAScoreEntry,
   Player,
 } from '../types';
 import getDarkerColor from './getDarkerColor';
@@ -21,21 +21,19 @@ type Props = {
 };
 
 function HistoryChart({ historyEntries }: Props) {
-  const scoreChanges = historyEntries.filter(
-    (e) => isScoreChange(e) || isScoreSet(e)
-  );
+  const scoreEntries = historyEntries.filter(isAScoreEntry);
 
-  const players = scoreChanges.reduce(
-    (currentPlayers: Player[], scoreChange) => {
-      if (currentPlayers.some((p) => p.name === scoreChange.player.name)) {
+  const players = scoreEntries.reduce(
+    (currentPlayers: Player[], scoreEntry) => {
+      if (currentPlayers.some((p) => p.name === scoreEntry.player.name)) {
         return currentPlayers;
       }
-      return [...currentPlayers, scoreChange.player];
+      return [...currentPlayers, scoreEntry.player];
     },
     []
   );
 
-  const dates = [...new Set(scoreChanges.map((entry) => entry.date))].sort(
+  const dates = [...new Set(scoreEntries.map((entry) => entry.date))].sort(
     (a, b) => new Date(a).valueOf() - new Date(b).valueOf()
   );
 
@@ -44,10 +42,11 @@ function HistoryChart({ historyEntries }: Props) {
       date: date.toString(),
     };
     players.forEach((player) => {
-      const playerEntry = scoreChanges.find(
+      const playerEntry = scoreEntries.find(
         (e) => e.player.name === player.name && e.date === date
       );
-      entry[player.name] = playerEntry ? playerEntry.newScore : null;
+      if (!playerEntry) return;
+      entry[player.name] = getNewScore(playerEntry);
     });
     return entry;
   });
@@ -74,7 +73,7 @@ function HistoryChart({ historyEntries }: Props) {
     .map((d) => d.toString());
 
   // yDomain computation to avoid large empty chart
-  const scores = scoreChanges.map((e) => e.newScore);
+  const scores = scoreEntries.map((e) => getNewScore(e));
   const minScore = Math.min(...scores);
   const maxScore = Math.max(...scores);
   const padding = Math.max(5, Math.round((maxScore - minScore) * 0.5));
@@ -93,7 +92,11 @@ function HistoryChart({ historyEntries }: Props) {
         ))}
       </Flex>
       <Box m="auto" maxWidth={900} height="50vh">
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer
+          width="100%"
+          height="100%"
+          initialDimension={{ width: 320, height: 200 }}
+        >
           <LineChart
             data={rechartsData}
             margin={{ top: 4, right: 4, bottom: 4, left: 4 }}
@@ -106,7 +109,7 @@ function HistoryChart({ historyEntries }: Props) {
               tickFormatter={formatDate}
               padding="gap"
             />
-            <YAxis domain={yDomain} width={20} />
+            <YAxis domain={yDomain} width={35} />
             {players.map((player) => (
               <Line
                 key={player.name}
