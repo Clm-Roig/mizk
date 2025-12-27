@@ -1,4 +1,5 @@
-import { HStack, Icon, Text, useTheme } from '@chakra-ui/react';
+import { ReactNode } from 'react';
+import { HStack, Icon, Stack, Text, useTheme } from '@chakra-ui/react';
 import { FaArrowRight } from 'react-icons/fa';
 import {
   HistoryEntry as HistoryEntryType,
@@ -7,6 +8,7 @@ import {
   isHistoryEvent,
   isAScoreSet,
   getNewScore,
+  isAScoreEntry,
 } from '../types';
 import { formatTimeToHHMMSS } from '../../../../components/ToolSearchBar/utils';
 
@@ -25,58 +27,65 @@ function DateComponent({ date }: { date: Date }) {
   );
 }
 
+function ScoreEntryWrapper({ children }: { children: ReactNode }) {
+  return (
+    <Stack
+      align="baseline"
+      direction={{ base: 'column', sm: 'row' }}
+      gap={{ base: '0', sm: '8px' }}
+    >
+      {children}
+    </Stack>
+  );
+}
+
 function HistoryEntry({ historyEntry }: Props) {
-  if (isAScoreChange(historyEntry)) {
-    const {
-      addedScore,
-      date,
-      player: { name },
-      previousScore,
-    } = historyEntry;
-    const sign = addedScore > 0 ? '+' : '';
-    const plural = Math.abs(addedScore) > 1 && 's';
-    const newScore = getNewScore(historyEntry);
-    return (
-      <HStack>
-        <HStack>
-          <Text color={addedScore > 0 ? 'green' : 'red'}>
-            <b>
+  if (isAScoreEntry(historyEntry)) {
+    if (isAScoreChange(historyEntry)) {
+      const {
+        addedScore,
+        date,
+        player: { name },
+        previousScore,
+      } = historyEntry;
+      const sign = addedScore > 0 ? '+' : '';
+      const plural = Math.abs(addedScore) > 1 && 's';
+      const newScore = getNewScore(historyEntry);
+      return (
+        <ScoreEntryWrapper>
+          <Text>
+            <b style={{ color: addedScore > 0 ? 'green' : 'red' }}>
               {sign}
               {addedScore}
             </b>{' '}
-          </Text>
-          <Text>
             point{plural} to <b>{name}</b> ({previousScore}{' '}
+            <Icon as={FaArrowRight} boxSize={2.5} /> {newScore})
           </Text>
-          <Icon as={FaArrowRight} boxSize={2.5} />
-          <Text>{newScore})</Text>
-        </HStack>
-        <DateComponent date={date} />
-      </HStack>
-    );
-  }
-  if (isAScoreSet(historyEntry)) {
-    const {
-      date,
-      newScore,
-      player: { name },
-      previousScore,
-    } = historyEntry;
-    const plural = Math.abs(newScore) > 1 && 's';
-    return (
-      <HStack>
-        <HStack>
+          <DateComponent date={date} />
+        </ScoreEntryWrapper>
+      );
+    }
+    if (isAScoreSet(historyEntry)) {
+      const {
+        date,
+        newScore,
+        player: { name },
+        previousScore,
+      } = historyEntry;
+      const plural = Math.abs(newScore) > 1 && 's';
+      return (
+        <ScoreEntryWrapper>
           <Text>
             <b>{name}</b>
             {`'s `}
             score set to {newScore} point{plural} ({previousScore}
+            <Icon as={FaArrowRight} boxSize={2.5} />
+            {newScore})
           </Text>
-          <Icon as={FaArrowRight} boxSize={2.5} />
-          <Text>{newScore})</Text>
-        </HStack>
-        <DateComponent date={date} />
-      </HStack>
-    );
+          <DateComponent date={date} />
+        </ScoreEntryWrapper>
+      );
+    }
   }
   if (isHistoryEvent(historyEntry)) {
     const { date, message } = historyEntry as HistoryEvent;

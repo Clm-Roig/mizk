@@ -53,13 +53,13 @@ function History({ deleteHistory, historyEntries }: Props) {
                   </Box>
                   <AccordionIcon />
                 </AccordionButton>
-                <AccordionPanel>
+                <AccordionPanel paddingX={0}>
                   <HistoryChart historyEntries={historyEntries} />
 
                   {historyEntries.map((historyEntry) => (
-                    <span key={historyEntry.id}>
+                    <Box key={historyEntry.id} mb={{ base: 1, sm: 0 }}>
                       <HistoryEntry historyEntry={historyEntry} />
-                    </span>
+                    </Box>
                   ))}
                 </AccordionPanel>
               </>
