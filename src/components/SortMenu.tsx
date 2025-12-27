@@ -19,7 +19,7 @@ export type SortType = {
 
 type Props = {
   onChangeSortType: (sortType: SortType) => void;
-  selectedSortType: SortType;
+  selectedSortType: SortType | null;
   sortTypes: SortType[];
 } & Omit<MenuProps, 'children'>;
 
@@ -49,7 +49,7 @@ function SortMenu({
               key={sortTypeOption.id}
               icon={sortTypeOption.icon}
               onClick={() => handleOnSortTypeClick(sortTypeOption)}
-              command={sortTypeOption.id === selectedSortType.id ? '✓' : ''}
+              command={sortTypeOption.id === selectedSortType?.id ? '✓' : ''}
             >
               {sortTypeOption.name}
             </MenuItem>

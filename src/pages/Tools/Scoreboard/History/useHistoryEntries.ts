@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { HistoryEntry, ScoreEntry } from './types';
+import { HistoryEntry, ScoreEntry } from '../types';
 
 function useHistoryEntries() {
   const [historyEntries, setHistoryEntries] = useState<HistoryEntry[]>([]);

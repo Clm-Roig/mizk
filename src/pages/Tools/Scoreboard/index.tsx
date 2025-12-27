@@ -1,22 +1,14 @@
 import { FormEvent, useEffect, useMemo, useState } from 'react';
 import {
   Button,
-  CardBody,
-  CardHeader,
   Flex,
   FormLabel,
   HStack,
   Heading,
-  IconButton,
   SimpleGrid,
-  Text,
-  useTheme,
 } from '@chakra-ui/react';
 import { v4 as uuidv4 } from 'uuid';
 import {
-  FaMinus,
-  FaPlus,
-  FaTrash,
   FaSortAlphaDown,
   FaSortAlphaUp,
   FaSortNumericDown,
@@ -24,7 +16,6 @@ import {
   FaUndo,
 } from 'react-icons/fa';
 import getStringToColor from './getStringToColor';
-import MCard from '../../../components/MCard';
 import {
   isAScoreChange,
   isAScoreEntry,
@@ -37,10 +28,11 @@ import {
 import SortMenu, { SortType } from '../../../components/SortMenu';
 import History from './History';
 import NewPlayerForm from './NewPlayerForm';
-import useHistoryEntries from './useHistoryEntries';
+import useHistoryEntries from './History/useHistoryEntries';
 import usePlayers from './usePlayers';
 import NumberEditor from '../../../components/NumberEditor';
 import useDebounce from '../../../hooks/useDebounce';
+import PlayerCard from './PlayerCard';
 
 const ALPHABETICAL_DOWN_SORT = 'ALPHABETICAL_DOWN_SORT';
 const ALPHABETICAL_UP_SORT = 'ALPHABETICAL_UP_SORT';
@@ -71,9 +63,6 @@ const sortTypes: SortType[] = [
 ];
 
 function Scoreboard() {
-  const {
-    colors: { red },
-  } = useTheme();
   const [pendingHistoryEntries, setPendingHistoryEntries] = useState<
     Array<ScoreEntry>
   >([]);
@@ -91,8 +80,8 @@ function Scoreboard() {
     deleteHistoryEntries,
     historyEntries,
   } = useHistoryEntries();
-  const [selectedSortType, setSelectedSortType] = useState<SortType>(
-    sortTypes[0]
+  const [selectedSortType, setSelectedSortType] = useState<SortType | null>(
+    null
   );
   const [scoreToSet, setScoreToSet] = useState<number | string | undefined>(10);
 
@@ -129,7 +118,9 @@ function Scoreboard() {
   };
 
   const handleChangeSortType = (newSortType: SortType) => {
-    if (newSortType.id !== selectedSortType.id) {
+    if (newSortType.id === selectedSortType?.id) {
+      setSelectedSortType(null);
+    } else {
       setSelectedSortType(newSortType);
     }
   };
@@ -236,6 +227,7 @@ function Scoreboard() {
   }, [addScoreEntry, debouncedHistoryEntries]);
 
   const sortedPlayers = useMemo(() => {
+    if (!selectedSortType) return players;
     switch (selectedSortType.id) {
       case ALPHABETICAL_DOWN_SORT:
         return [...players].sort((p1, p2) => p1.name.localeCompare(p2.name));
@@ -250,10 +242,10 @@ function Scoreboard() {
           p2.score - p1.score > 0 ? 1 : -1
         );
       default: {
-        throw new Error(`Unhandled sort type: ${selectedSortType.name}`);
+        return players;
       }
     }
-  }, [players, selectedSortType.id, selectedSortType.name]);
+  }, [players, selectedSortType]);
 
   return (
     <>
@@ -273,46 +265,14 @@ function Scoreboard() {
 
       <SimpleGrid spacing={4} minChildWidth="250px" w="full" mb={4}>
         {sortedPlayers.map((player) => (
-          <MCard
+          <PlayerCard
             key={player.name}
+            onAddScore={handleAddScore}
+            onRemovePlayer={handleRemove}
+            player={player}
             backgroundColor={getStringToColor(player.name)}
             align="center"
-          >
-            <CardHeader>
-              <Heading>{player.name}</Heading>
-              <IconButton
-                variant="ghost"
-                aria-label="delete"
-                color={red[500]}
-                icon={<FaTrash />}
-                position="absolute"
-                top={0}
-                right={0}
-                onClick={() => handleRemove(player)}
-              />
-            </CardHeader>
-            <CardBody>
-              <HStack>
-                <IconButton
-                  icon={<FaMinus />}
-                  aria-label="decrease score"
-                  onClick={() => handleAddScore(player, -1)}
-                  height={{ base: '48px', md: '72px' }}
-                  width={{ base: '48px', md: '72px' }}
-                />
-                <Text fontSize="4xl" px={6}>
-                  {player.score}
-                </Text>
-                <IconButton
-                  icon={<FaPlus />}
-                  aria-label="increase score"
-                  onClick={() => handleAddScore(player, 1)}
-                  height={{ base: '48px', md: '72px' }}
-                  width={{ base: '48px', md: '72px' }}
-                />
-              </HStack>
-            </CardBody>
-          </MCard>
+          />
         ))}
       </SimpleGrid>
 
