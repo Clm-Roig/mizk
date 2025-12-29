@@ -15,10 +15,10 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { FaDiceD20, FaDiceSix, FaDiceTwo } from 'react-icons/fa';
-import NumberEditor from '../../components/NumberEditor';
+import NumberEditor from '../../../components/NumberEditor';
 
-const ANIMATION_DURATION = 300;
-const DEFAULT_MIN = 0;
+export const ANIMATION_DURATION = 300;
+const DEFAULT_MIN = 1;
 const DEFAULT_MAX = 6;
 const NB_EDITOR_MAX_WIDTH = 100;
 
@@ -123,7 +123,9 @@ function RandomnessGenerator() {
           <AbsoluteCenter>
             {isOpen ? (
               <ScaleFade in={isOpen} unmountOnExit initialScale={0.4}>
-                <Text fontSize="7xl">{result}</Text>
+                <Text fontSize="7xl" data-testid="result">
+                  {result}
+                </Text>
               </ScaleFade>
             ) : (
               <Fade in={!isOpen} unmountOnExit>
