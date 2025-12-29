@@ -10,13 +10,14 @@ import {
   ScaleFade,
   Text,
   VStack,
+  Stack,
   useDisclosure,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { FaDiceD20, FaDiceSix, FaDiceTwo } from 'react-icons/fa';
 import NumberEditor from '../../components/NumberEditor';
 
-const ANIMATION_DURATION = 500;
+const ANIMATION_DURATION = 300;
 const DEFAULT_MIN = 0;
 const DEFAULT_MAX = 6;
 const NB_EDITOR_MAX_WIDTH = 100;
@@ -37,10 +38,10 @@ function RandomnessGenerator() {
     onOpen();
   }, [onOpen]);
 
-  const handleOnComputeClick = () => {
+  const handleOnCompute = (min: number, max: number) => {
     onClose();
     setTimeout(() => {
-      const newResult = getRandomNumber(minValue, maxValue);
+      const newResult = getRandomNumber(min, max);
       setResult(newResult);
       onOpen();
     }, ANIMATION_DURATION);
@@ -49,39 +50,43 @@ function RandomnessGenerator() {
   const setPresetAndCompute = (min: number, max: number) => {
     setMinValue(min);
     setMaxValue(max);
-    handleOnComputeClick();
+    handleOnCompute(min, max);
   };
 
   return (
     <>
       <Heading as="h1">Randomness Generator</Heading>
-      <HStack justify="center">
+      <Stack direction={{ base: 'column', sm: 'row' }} alignItems="center">
         <Text>Presets:</Text>
-        <Button
-          leftIcon={<FaDiceTwo />}
-          onClick={() => setPresetAndCompute(1, 2)}
-        >
-          D2
-        </Button>
-        <Button
-          leftIcon={<FaDiceSix />}
-          onClick={() => setPresetAndCompute(1, 6)}
-        >
-          D6
-        </Button>
-        <Button
-          leftIcon={<FaDiceD20 />}
-          onClick={() => setPresetAndCompute(1, 10)}
-        >
-          D10
-        </Button>
-        <Button
-          leftIcon={<FaDiceD20 />}
-          onClick={() => setPresetAndCompute(1, 20)}
-        >
-          D20
-        </Button>
-      </HStack>
+        <HStack>
+          <Button
+            leftIcon={<FaDiceTwo />}
+            onClick={() => setPresetAndCompute(1, 2)}
+          >
+            D2
+          </Button>
+          <Button
+            leftIcon={<FaDiceSix />}
+            onClick={() => setPresetAndCompute(1, 6)}
+          >
+            D6
+          </Button>
+        </HStack>
+        <HStack>
+          <Button
+            leftIcon={<FaDiceD20 />}
+            onClick={() => setPresetAndCompute(1, 10)}
+          >
+            D10
+          </Button>
+          <Button
+            leftIcon={<FaDiceD20 />}
+            onClick={() => setPresetAndCompute(1, 20)}
+          >
+            D20
+          </Button>
+        </HStack>
+      </Stack>
 
       <HStack justify="center" gap={8} mt={4}>
         <Box>
@@ -107,12 +112,12 @@ function RandomnessGenerator() {
       </HStack>
 
       <Center mt={4}>
-        <Button size="lg" onClick={handleOnComputeClick}>
+        <Button size="lg" onClick={() => handleOnCompute(minValue, maxValue)}>
           Compute
         </Button>
       </Center>
 
-      <VStack mt={8}>
+      <VStack mt={{ base: 4, sm: 8 }}>
         <Text fontSize="xl">RESULT</Text>
         <Box h={100} position="relative">
           <AbsoluteCenter>
