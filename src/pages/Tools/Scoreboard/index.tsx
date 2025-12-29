@@ -127,6 +127,17 @@ function Scoreboard() {
 
   const handleResetScores = () => {
     if (players.some((p) => p.score !== 0)) {
+      const date = new Date();
+      setPendingHistoryEntries((prev) => [
+        ...prev,
+        ...players.map((player) => ({
+          date,
+          id: uuidv4(),
+          newScore: 0,
+          player,
+          previousScore: player.score,
+        })),
+      ]);
       setScoreForAllPlayers(0);
       addHistoryEvent('Scores reset!');
     }

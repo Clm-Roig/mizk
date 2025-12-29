@@ -38,8 +38,12 @@ export function isAScoreChange(
 export function isAScoreSet(
   historyEntry: HistoryEntry
 ): historyEntry is ScoreSet {
+  const newScore = (historyEntry as any)?.newScore;
   return (
-    !!(historyEntry as any)?.player?.name && !!(historyEntry as any)?.newScore
+    !!(historyEntry as any)?.player?.name &&
+    newScore !== undefined &&
+    newScore !== null &&
+    !Number.isNaN(newScore)
   );
 }
 
