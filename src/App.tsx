@@ -33,6 +33,7 @@ import WhatsMyIp from './pages/Tools/WhatsMyIp';
 import DomainTools from './pages/Tools/DomainTools';
 import Scoreboard from './pages/Tools/Scoreboard';
 import RandomnessGenerator from './pages/Tools/RandomnessGenerator';
+import QRCodeGenerator from './pages/Tools/QRCodeGenerator';
 
 function CustomRouter({ children }: { children: ReactNode }) {
   return process.env.NODE_ENV === 'test' ? (
@@ -85,6 +86,10 @@ function App() {
             <Route
               path={`${ENCODER_DECODER.url}/base64`}
               element={<Base64EncoderDecoder />}
+            />
+            <Route
+              path={`${ENCODER_DECODER.url}/qr-code-generator`}
+              element={<QRCodeGenerator />}
             />
 
             {/* ===== Text tools ===== */}
