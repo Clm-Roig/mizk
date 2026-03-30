@@ -141,6 +141,14 @@ const tools: Array<Tool> = [
     type: GAME,
     url: `${GAME.url}/randomness-generator`,
   },
+  {
+    description: 'Generate a QR code..',
+    keywords: ['code', 'qr', 'generator', 'decipher', 'url'],
+    menuName: 'QR Code generator',
+    name: 'QR Code generator',
+    type: ENCODER_DECODER,
+    url: `${ENCODER_DECODER.url}/qr-code-generator`,
+  },
 ];
 
 export default tools;
